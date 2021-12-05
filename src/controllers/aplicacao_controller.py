@@ -1,6 +1,6 @@
-from src.controllers.administradores_controller import AdministradoresController
-from src.controllers.eleicoes_controller import EleicoesController
-from src.controllers.autenticacao_controller import AutenticacaoController
+from controllers.administradores_controller import AdministradoresController
+from controllers.eleicoes_controller import EleicoesController
+from controllers.autenticacao_controller import AutenticacaoController
 
 
 class AplicacaoController:
@@ -14,6 +14,7 @@ class AplicacaoController:
 
     def abrir(self):
         if self.__usuario_atual is None:
+            print("abrindo")
             self.__autenticacao_controller.abrir()
         else:
             pass

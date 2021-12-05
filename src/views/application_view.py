@@ -4,7 +4,6 @@ class ApplicationView:
         self.__application_controller = application_controller
 
     def abrir(self):
-
         print("AQUI")
 
 

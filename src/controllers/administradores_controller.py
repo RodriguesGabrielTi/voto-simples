@@ -1,4 +1,4 @@
-from src.models.administrador import Admistrador
+from models.administrador import Admistrador
 
 
 class AdministradoresController:

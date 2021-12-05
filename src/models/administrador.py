@@ -1,5 +1,5 @@
-from src.models.usuario import Usuario, BaseModel
-from src.engine import engine
+from models.usuario import Usuario, BaseModel
+from engine import engine
 from sqlalchemy import Column, String
 
 

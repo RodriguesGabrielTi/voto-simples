@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Table, ForeignKey
 from sqlalchemy.orm import relationship, validates
-from src.models.base_model import BaseModel
-from src.models.categoria import Categoria # não é possível criar o banco de dados sem esse import
-from src.engine import engine
+from models.base_model import BaseModel
+from models.categoria import Categoria  # não é possível criar o banco de dados sem esse import
+from engine import engine
 
 association_table = Table('eleicao_categoria', BaseModel.metadata,
                           Column('eleicao_id', ForeignKey('eleicoes.id')),

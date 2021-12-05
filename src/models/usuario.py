@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from sqlalchemy import Column, Integer, String, Date, Boolean
 from sqlalchemy.orm import validates
 from sqlalchemy.sql import func
-from src.models.base_model import BaseModel
+from models.base_model import BaseModel
 import re
 
 

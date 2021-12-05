@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey
 from sqlalchemy.orm import relationship, validates
-from src.models.base_model import BaseModel
-from src.engine import engine
+from models.base_model import BaseModel
+from engine import engine
 
 
 class Questao(BaseModel):

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import validates
-from src.models.base_model import BaseModel
-from src.engine import engine
+from models.base_model import BaseModel
+from engine import engine
 
 CATEGORIAS_PERMITIDAS = ['estudante', 'professor', 'tae']
 

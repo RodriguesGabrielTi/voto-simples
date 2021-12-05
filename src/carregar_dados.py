@@ -1,4 +1,4 @@
-from src.models.categoria import Categoria
+from models.categoria import Categoria
 
 
 def carregar(sessao):

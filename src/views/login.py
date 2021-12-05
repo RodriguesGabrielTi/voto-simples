@@ -5,6 +5,7 @@ from views.menu import MenuUi
 
 class LoginUi(QtWidgets.QDialog):
     def __init__(self):
+        print('iniciando tela login')
         self.menu_window = None
         super().__init__()
         uic.loadUi(f"{UI_PATH}/login.ui", self)
@@ -14,6 +15,7 @@ class LoginUi(QtWidgets.QDialog):
         self.cpf_input = self.findChild(QtWidgets.QLineEdit, 'lineEdit_cpf')
         self.senha_input = self.findChild(QtWidgets.QLineEdit, 'lineEdit_senha')
         self.button.clicked.connect(self.login)
+        print('SHOW')
         self.show()
 
     def login(self):
