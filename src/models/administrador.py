@@ -1,4 +1,5 @@
-from usuario import Usuario
+from src.models.usuario import Usuario, BaseModel
+from src.engine import engine
 from sqlalchemy import Column, String
 
 
@@ -7,5 +8,5 @@ class Admistrador(Usuario):
 
     senha = Column(String)
 
-    def __init__(self):
-        super().__init__()
+
+BaseModel.metadata.create_all(engine)

@@ -2,36 +2,41 @@ from src.models.administrador import Admistrador
 
 
 class AdministradoresController:
-    def __init__(self, application_controller):
-        self.__application_controller = application_controller
-        self.__administradores_view = None
+    def __init__(self, aplicacao_controller, sessao):
+        self.__sessao = sessao
+        self.__aplicacao_controller = aplicacao_controller
+        self.__administradores_ui = None
 
     def abrir(self):
+        # self,__administradores_ui.show()
         pass
 
-    def index(self):
-        administradores = Admistrador.query.all()
+    def listar(self):
+        administradores = self.__sessao.query(Admistrador).all()
+        return administradores
 
-    def show(self, id):
-        administrador = Admistrador.query.get(id)
-        # mostrar na tela
+    def detalhar(self, administrador_id):
+        administrador = self.__sessao.query(Admistrador).get(administrador_id)
+        return administrador
 
-    def create(self, params):
-        administrador = Admistrador(params)
-        # session.add(administrador)
-        # session.commit()
+    def criar(self, parametros):
+        administrador = Admistrador(nome=parametros["nome"], email=parametros["email"], cpf=parametros["cpf"],
+                                    data_nascimento=parametros["data_nascimento"], endereco=parametros["endereco"],
+                                    ativo=parametros["ativo"])
+        self.__sessao.add(administrador)
+        self.__sessao.commit()
 
-    def update(self, params):
-        administrador = Admistrador.query.get(id)
-        administrador.nome = params["nome"]
-        administrador.cpf = params["cpf"]
-        administrador.data_nascimento = params["data_nascimento"]
-        administrador.endereco = params["endereco"]
-        administrador.ativo = params["ativo"]
-        administrador.session.commit()
+    def atualizar(self, administrador_id, parametros):
+        administrador = self.__sessao.query(Admistrador).get(administrador_id)
+        administrador.nome = parametros["nome"]
+        administrador.email = parametros["email"]
+        administrador.cpf = parametros["cpf"]
+        administrador.data_nascimento = parametros["data_nascimento"]
+        administrador.endereco = parametros["endereco"]
+        administrador.ativo = parametros["ativo"]
+        self.__sessao.commit()
 
-    def delete(self, categoria_id):
-        administrador = Admistrador.query.get(id)
+    def excluir(self, administrador_id):
+        administrador = self.__sessao.query(Admistrador).get(administrador_id)
         administrador.delete()
-        # session.commit()
-
+        self.__sessao.commit()
