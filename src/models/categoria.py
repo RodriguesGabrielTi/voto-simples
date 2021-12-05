@@ -12,10 +12,10 @@ class Categoria(BaseModel):
     nome = Column(String)
 
     @validates("nome")
-    def validate_nome(self, key, address):
-        if address not in CATEGORIAS_PERMITIDAS:
+    def validar_nome(self, key, nome):
+        if nome not in CATEGORIAS_PERMITIDAS:
             raise ValueError("Categoria inválida")
-        return address
+        return nome
 
 
 BaseModel.metadata.create_all(engine)

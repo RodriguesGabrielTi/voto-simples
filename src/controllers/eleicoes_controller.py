@@ -4,40 +4,43 @@ from src.controllers.categorias_controller import CategoriasController
 
 
 class EleicoesController:
-    def __init__(self, application_controller, sessao):
+    def __init__(self, aplicacao_controller, sessao):
         self.__sessao = sessao
-        self.__application_controller = application_controller
-        self.__eleicoes_view = None
+        self.__aplicacao_controller = aplicacao_controller
+        self.__eleicoes_ui = None
 
     def abrir(self):
+        # self.__eleicoes_ui.abrir()
         pass
 
-    def index(self):
+    def listar(self):
         eleicoes = self.__sessao.query(Eleicao).all()
-        print(eleicoes)
+        return eleicoes
 
-    def show(self, eleicao_id):
+    def detalhar(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
-        print(eleicao)
+        return eleicao
 
-    def create(self, params):
-        eleicao = Eleicao(nome=params["nome"], descricao=params["descricao"])
+    def criar(self, parametros):
+        eleicao = Eleicao(nome=parametros["nome"], descricao=parametros["descricao"])
         self.__sessao.add(eleicao)
         self.__sessao.commit()
 
-    def update(self, params):
-        eleicao = self.__sessao.query(Eleicao).get(params["id"])
-        eleicao.nome = params["nome"]
-        eleicao.descricao = params["descricao"]
+    def atualizar(self, eleicao_id, parametros):
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        eleicao.nome = parametros["nome"]
+        eleicao.descricao = parametros["descricao"]
         self.__sessao.commit()
 
-    def delete(self, eleicao_id):
+    def excluir(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         eleicao.delete()
         self.__sessao.commit()
 
-    def publicar(self, eleicao_id):
+    def publicar(self, eleicao_id, parametros):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        eleicao.data_inicio = parametros["data_inicio"]
+        eleicao.data_fim = parametros["data_fim"]
         eleicao.estado = "publicada"
         self.__sessao.commit()
 

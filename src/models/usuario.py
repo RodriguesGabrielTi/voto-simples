@@ -15,30 +15,29 @@ class Usuario(BaseModel):
     cpf = Column(String, primary_key=True)
     endereco = Column(String)
     ativo = Column(Boolean)
-    created_at = Column(Date, server_default=func.now())
+    criado_em = Column(Date, server_default=func.now())
 
     @validates('nome')
-    def validate_nome(self, key, address):
-        if len(address) < 3 or len(address) > 50:
+    def validar_nome(self, key, nome):
+        if len(nome) < 3 or len(nome) > 50:
             raise ValueError("Nome inválido")
-        return address
+        return nome
 
     @validates('email')
-    def validate_email(self, key, address):
-        if '@' not in address:
+    def validar_email(self, key, email):
+        if '@' not in email:
             raise ValueError("Email inválido")
-        return address
+        return email
 
     @validates('cpf')
-    def validate_cpf(self, key, address):
+    def validar_cpf(self, key, cpf):
         valido = re.compile("([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
-        if not valido.match(address):
+        if not valido.match(cpf):
             raise ValueError("Cpf invalido")
-        return address
+        return cpf
 
     @validates('endereco')
-    def validate_endereco(self, key, address):
-        if len(address) < 3 or len(address) > 50:
+    def validar_endereco(self, key, endereco):
+        if len(endereco) < 3 or len(endereco) > 50:
             raise ValueError("Endereço inválido")
-        return address
-
+        return endereco
