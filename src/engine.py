@@ -1,3 +1,5 @@
 from sqlalchemy import create_engine
 
-engine = create_engine('sqlite:///:memory:', echo=True)
+database = open('database.db', 'a+')
+engine = create_engine('sqlite:///database.db', echo=True)
+

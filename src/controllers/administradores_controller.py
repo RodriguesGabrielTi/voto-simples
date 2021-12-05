@@ -2,7 +2,8 @@ from src.models.administrador import Admistrador
 
 
 class AdministradoresController:
-    def __init__(self, application_controller):
+    def __init__(self, application_controller, sessao):
+        self.__sessao = sessao
         self.__application_controller = application_controller
         self.__administradores_view = None
 
@@ -10,28 +11,32 @@ class AdministradoresController:
         pass
 
     def index(self):
-        administradores = Admistrador.query.all()
+        administradores = self.__sessao.query(Admistrador).all()
+        print(administradores)
 
-    def show(self, id):
-        administrador = Admistrador.query.get(id)
+    def show(self, administrador_id):
+        administrador = self.__sessao.query(Admistrador).get(administrador_id)
+        print(administrador)
         # mostrar na tela
 
     def create(self, params):
-        administrador = Admistrador(params)
-        # session.add(administrador)
-        # session.commit()
+        administrador = Admistrador(nome=params["nome"], email=params["email"], cpf=params["cpf"],
+                                    data_nascimento=params["data_nascimento"], endereco=params["endereco"],
+                                    ativo=params["ativo"])
+        self.__sessao.add(administrador)
+        self.__sessao.commit()
 
     def update(self, params):
-        administrador = Admistrador.query.get(id)
+        administrador = self.__sessao.query(Admistrador).get(params["id"])
         administrador.nome = params["nome"]
+        administrador.email = params["email"]
         administrador.cpf = params["cpf"]
         administrador.data_nascimento = params["data_nascimento"]
         administrador.endereco = params["endereco"]
         administrador.ativo = params["ativo"]
-        administrador.session.commit()
+        self.__sessao.commit()
 
-    def delete(self, categoria_id):
-        administrador = Admistrador.query.get(id)
+    def delete(self, administrador_id):
+        administrador = self.__sessao.query(Admistrador).get(administrador_id)
         administrador.delete()
-        # session.commit()
-
+        self.__sessao.commit()

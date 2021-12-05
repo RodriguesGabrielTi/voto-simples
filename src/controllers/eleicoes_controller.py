@@ -4,7 +4,8 @@ from src.controllers.categorias_controller import CategoriasController
 
 
 class EleicoesController:
-    def __init__(self, application_controller):
+    def __init__(self, application_controller, sessao):
+        self.__sessao = sessao
         self.__application_controller = application_controller
         self.__eleicoes_view = None
 
@@ -12,37 +13,38 @@ class EleicoesController:
         pass
 
     def index(self):
-        eleicoes = Eleicao.query.all()
+        eleicoes = self.__sessao.query(Eleicao).all()
+        print(eleicoes)
 
     def show(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
-        # mostrar na tela
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        print(eleicao)
 
     def create(self, params):
         eleicao = Eleicao(nome=params["nome"], descricao=params["descricao"])
-        # session.add(administrador)
-        # session.commit()
+        self.__sessao.add(eleicao)
+        self.__sessao.commit()
 
     def update(self, params):
-        eleicao = Eleicao.query.get(params["id"])
+        eleicao = self.__sessao.query(Eleicao).get(params["id"])
         eleicao.nome = params["nome"]
         eleicao.descricao = params["descricao"]
-        eleicao.session.commit()
+        self.__sessao.commit()
 
     def delete(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         eleicao.delete()
-        # session.commit()
+        self.__sessao.commit()
 
     def publicar(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         eleicao.estado = "publicada"
-        # session.commit()
+        self.__sessao.commit()
 
     def questoes(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
-        QuestoesController(eleicao).abrir()
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        QuestoesController(eleicao, self.__sessao).abrir()
 
     def categorias(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
-        CategoriasController(eleicao).abrir()
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        CategoriasController(eleicao, self.__sessao).abrir()

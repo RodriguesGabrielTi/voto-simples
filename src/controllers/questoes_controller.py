@@ -2,36 +2,40 @@ from src.models.questao import Questao
 
 
 class QuestoesController:
-    def __init__(self, eleicao):
+    def __init__(self, eleicao, sessao):
         self.__eleicao = eleicao
         self.__questoes_view = None
+        self.__sessao = sessao
 
     def abrir(self):
         pass
 
     def index(self):
-        questao = Questao.query.all()
+        questoes = self.__eleicao.questoes
+        print(questoes)
 
-    def show(self, id):
-        questao = Questao.query.get(id)
+    def show(self, questao_id):
+        questao = self.__sessao.query(Questao).get(questao_id)
+        print(questao)
         # mostrar na tela
 
     def create(self, params):
-        questao = Questao(params)
-        questao.eleicao_id = self.__eleicao.id
-        # session.add(administrador)
-        # session.commit()
+        questao = Questao(nome=params["nome"], descricao=params["descricao"],
+                          numero_escolhas=params["numero_escolhas"], eleicao_id=self.__eleicao.id)
+        self.__sessao.add(questao)
+        self.__sessao.commit()
 
     def update(self, params):
-        questao = Questao.query.get(id)
+        questao = self.__sessao.query(Questao).get(params["id"])
         questao.nome = params["nome"]
         questao.descricao = params["descricao"]
-        questao.session.commit()
+        questao.numero_escolhas = params["numero-escolhas"]
+        self.__sessao.commit()
 
-    def delete(self, id):
-        questao = Questao.query.get(id)
+    def delete(self, questao_id):
+        questao = self.__sessao.query(Questao).get(questao_id)
         questao.delete()
-        # session.commit()
+        self.__sessao.commit()
 
     def candidatos(self):
         pass
