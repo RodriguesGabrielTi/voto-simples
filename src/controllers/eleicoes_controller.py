@@ -4,45 +4,50 @@ from src.controllers.categorias_controller import CategoriasController
 
 
 class EleicoesController:
-    def __init__(self, application_controller):
-        self.__application_controller = application_controller
-        self.__eleicoes_view = None
+    def __init__(self, aplicacao_controller, sessao):
+        self.__sessao = sessao
+        self.__aplicacao_controller = aplicacao_controller
+        self.__eleicoes_ui = None
 
     def abrir(self):
+        # self.__eleicoes_ui.abrir()
         pass
 
-    def index(self):
-        eleicoes = Eleicao.query.all()
+    def listar(self):
+        eleicoes = self.__sessao.query(Eleicao).all()
+        return eleicoes
 
-    def show(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
-        # mostrar na tela
+    def detalhar(self, eleicao_id):
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        return eleicao
 
-    def create(self, params):
-        eleicao = Eleicao(nome=params["nome"], descricao=params["descricao"])
-        # session.add(administrador)
-        # session.commit()
+    def criar(self, parametros):
+        eleicao = Eleicao(nome=parametros["nome"], descricao=parametros["descricao"])
+        self.__sessao.add(eleicao)
+        self.__sessao.commit()
 
-    def update(self, params):
-        eleicao = Eleicao.query.get(params["id"])
-        eleicao.nome = params["nome"]
-        eleicao.descricao = params["descricao"]
-        eleicao.session.commit()
+    def atualizar(self, eleicao_id, parametros):
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        eleicao.nome = parametros["nome"]
+        eleicao.descricao = parametros["descricao"]
+        self.__sessao.commit()
 
-    def delete(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
+    def excluir(self, eleicao_id):
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         eleicao.delete()
-        # session.commit()
+        self.__sessao.commit()
 
-    def publicar(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
+    def publicar(self, eleicao_id, parametros):
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        eleicao.data_inicio = parametros["data_inicio"]
+        eleicao.data_fim = parametros["data_fim"]
         eleicao.estado = "publicada"
-        # session.commit()
+        self.__sessao.commit()
 
     def questoes(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
-        QuestoesController(eleicao).abrir()
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        QuestoesController(eleicao, self.__sessao).abrir()
 
     def categorias(self, eleicao_id):
-        eleicao = Eleicao.query.get(eleicao_id)
-        CategoriasController(eleicao).abrir()
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        CategoriasController(eleicao, self.__sessao).abrir()
