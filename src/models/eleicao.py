@@ -12,7 +12,7 @@ association_table = Table('eleicao_categoria', BaseModel.metadata,
 class Eleicao(BaseModel):
     __tablename__ = 'eleicoes'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String)
     descricao = Column(Text)
     estado = Column(String)

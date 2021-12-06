@@ -8,7 +8,7 @@ CATEGORIAS_PERMITIDAS = ['estudante', 'professor', 'tae']
 class Categoria(BaseModel):
     __tablename__ = 'categorias'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String)
 
     @validates("nome")

@@ -1,11 +1,12 @@
 from PyQt5 import QtWidgets, uic
+
 from settings import UI_PATH
 from views.menu import MenuUi
 
 
 class LoginUi(QtWidgets.QDialog):
-    def __init__(self):
-        print('iniciando tela login')
+    def __init__(self, aplicacao_controller):
+        self.__controller = aplicacao_controller
         self.menu_window = None
         super().__init__()
         uic.loadUi(f"{UI_PATH}/login.ui", self)
@@ -15,8 +16,8 @@ class LoginUi(QtWidgets.QDialog):
         self.cpf_input = self.findChild(QtWidgets.QLineEdit, 'lineEdit_cpf')
         self.senha_input = self.findChild(QtWidgets.QLineEdit, 'lineEdit_senha')
         self.button.clicked.connect(self.login)
-        print('SHOW')
-        self.show()
+
+        self.showMaximized()
 
     def login(self):
         cpf = self.cpf_input.text()
@@ -24,13 +25,15 @@ class LoginUi(QtWidgets.QDialog):
         if not cpf or not senha:
             print("digite os campos")
             return
-        if cpf != '08330369390' or senha != '1234':
-            print("senha ou cpf invalído")
+        try:
+            self.__controller.autenticacao_controller().autenticar(cpf, senha)
+            self.close()
+            self.open_menu()
+        except ValueError:
+            print("senha ou cpf invalido")
             return
-        self.close()
-        self.open_menu()
 
     def open_menu(self):
         if self.menu_window is None:
-            self.menu_window = MenuUi()
+            self.menu_window = MenuUi(self.__controller)
             self.menu_window.show()

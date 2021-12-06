@@ -15,7 +15,7 @@ class Usuario(BaseModel):
     data_nascimento = Column(Date)
     cpf = Column(String, primary_key=True)
     endereco = Column(String)
-    ativo = Column(Boolean)
+    ativo = Column(Boolean, default=True)
     criado_em = Column(Date, server_default=func.now())
 
     @validates('nome')

@@ -3,7 +3,7 @@ from engine import engine
 from sqlalchemy import Column, String
 
 
-class Admistrador(Usuario):
+class Administrador(Usuario):
     __tablename__ = 'administradores'
 
     senha = Column(String)
