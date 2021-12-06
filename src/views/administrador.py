@@ -9,8 +9,8 @@ from views.erro import ErroUi
 class AdminUi(QtWidgets.QMainWindow):
     def __init__(self, aplicacao_controller):
         self.erro_dialog = None
-        self.__controllers = aplicacao_controller
-        self.__admin_controller = self.__controllers.administradores_controller()
+        self.__controller = aplicacao_controller
+        self.__admin_controller = self.__controller.administradores_controller()
         super().__init__()
 
         uic.loadUi(f"{UI_PATH}/administradores.ui", self)
@@ -29,17 +29,20 @@ class AdminUi(QtWidgets.QMainWindow):
         self.cadastrar_button.clicked.connect(self.cadastrar)
         self.atualizar_button = self.findChild(QtWidgets.QPushButton, 'pushButton_atualizar')
         self.atualizar_button.setEnabled(False)
+        self.atualizar_button.clicked.connect(self.atualizar)
         self.excluir_button = self.findChild(QtWidgets.QPushButton, 'pushButton_excluir')
-        self.atualizar_button.setEnabled(False)
+        self.excluir_button.setEnabled(False)
+        self.excluir_button.clicked.connect(self.excluir)
 
         self.table.clicked.connect(self.on_click)
-        self.table.doubleClicked.connect(self.clean)
         self.cpf_selected = None
         self.listar_admins()
         self.showMaximized()
 
+
     def listar_admins(self):
         admins = self.__admin_controller.listar()
+        self.table.setRowCount(0)
         for admin in admins:
             position = self.table.rowCount()
             self.table.insertRow(position)
@@ -49,11 +52,15 @@ class AdminUi(QtWidgets.QMainWindow):
 
     def on_click(self):
         index = (self.table.selectionModel().currentIndex())
-        self.cpf_selected = index.sibling(index.row(), 1).data()
-        self.carregar_fields()
+        if self.cpf_selected == index.sibling(index.row(), 1).data():
+            self.clean()
+            self.cpf_selected = None
+        else:
+            self.cpf_selected = index.sibling(index.row(), 1).data()
+            self.carregar_fields()
+        self.botoes()
 
     def carregar_fields(self):
-        print(self.cpf_selected)
         admin = self.__admin_controller.detalhar(self.cpf_selected)
         self.nome_field.setText(admin["nome"])
         self.data_nascimento_field.setDate(admin["data_nascimento"])
@@ -75,8 +82,35 @@ class AdminUi(QtWidgets.QMainWindow):
 
     def cadastrar(self):
         try:
-            self.validate_fields()
+            dados = self.validate_fields()
+            self.__admin_controller.criar(dados)
+            self.listar_admins()
+            self.clean()
         except Exception as e:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro(str(e))
+
+    def atualizar(self):
+        try:
+            dados = self.validate_fields()
+            self.__admin_controller.atualizar(dados["cpf"], dados)
+            self.carregar_fields()
+            self.listar_admins()
+        except Exception as e:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro(str(e))
+
+    def excluir(self):
+        try:
+            if self.cpf_selected == self.__controller.usuario_atual.cpf:
+                raise ValueError("Você não pode se excluir")
+            self.__admin_controller.excluir(self.cpf_selected)
+            self.listar_admins()
+            self.clean()
+            self.cpf_selected = None
+            self.botoes()
+        except Exception as e:
+            self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))
 
     def validate_cpf(self):
@@ -91,15 +125,23 @@ class AdminUi(QtWidgets.QMainWindow):
             "data_nascimento": self.data_nascimento_field.date().toPyDate(),
             "endereco": self.endereco.text(),
             "senha": self.senha_field.text(),
-            "ativo": self.ativo_checkbox.isChecked()
         }
         for campo in dados:
             if not dados.get(campo):
                 self.mostrar_erro("Preencha todos os campos!")
                 return
-
-        self.__admin_controller.criar(dados)
-        self.listar_admins()
+        dados["ativo"] = self.ativo_checkbox.isChecked()
+        return dados
 
     def mostrar_erro(self, erro):
         self.erro_dialog = ErroUi(erro)
+
+    def botoes(self):
+        if self.cpf_selected:
+            self.atualizar_button.setEnabled(True)
+            self.cadastrar_button.setEnabled(False)
+            self.excluir_button.setEnabled(True)
+        else:
+            self.atualizar_button.setEnabled(False)
+            self.cadastrar_button.setEnabled(True)
+            self.excluir_button.setEnabled(False)
