@@ -9,17 +9,15 @@ class EleicoesController:
         self.__aplicacao_controller = aplicacao_controller
         self.__eleicoes_ui = None
 
-    def abrir(self):
-        # self.__eleicoes_ui.abrir()
-        pass
-
     def listar(self):
         eleicoes = self.__sessao.query(Eleicao).all()
         return eleicoes
 
     def detalhar(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
-        return eleicao
+        if not eleicao:
+            raise ValueError("Eleicao não encontrada")
+        return eleicao.__dict__
 
     def criar(self, parametros):
         eleicao = Eleicao(nome=parametros["nome"], descricao=parametros["descricao"])
@@ -28,17 +26,23 @@ class EleicoesController:
 
     def atualizar(self, eleicao_id, parametros):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        if not eleicao:
+            raise ValueError("Eleicao não encontrada")
         eleicao.nome = parametros["nome"]
         eleicao.descricao = parametros["descricao"]
         self.__sessao.commit()
 
     def excluir(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
-        eleicao.delete()
+        if not eleicao:
+            raise ValueError("Eleicao não encontrada")
+        self.__sessao.delete(eleicao)
         self.__sessao.commit()
 
     def publicar(self, eleicao_id, parametros):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        if not eleicao:
+            raise ValueError("Eleicao não encontrada")
         eleicao.data_inicio = parametros["data_inicio"]
         eleicao.data_fim = parametros["data_fim"]
         eleicao.estado = "publicada"
@@ -46,8 +50,12 @@ class EleicoesController:
 
     def questoes(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        if not eleicao:
+            raise ValueError("Eleicao não encontrada")
         QuestoesController(eleicao, self.__sessao).abrir()
 
     def categorias(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        if not eleicao:
+            raise ValueError("Eleicao não encontrada")
         CategoriasController(eleicao, self.__sessao).abrir()

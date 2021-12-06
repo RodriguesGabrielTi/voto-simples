@@ -7,7 +7,7 @@ from views.login import LoginUi
 
 class AplicacaoController:
     def __init__(self, sessao):
-        self.__session = sessao
+        self.__sessao = sessao
         self.__eleicoes_controller = EleicoesController(self, sessao)
         self.__administradores_controller = AdministradoresController(self, sessao)
         self.__autenticacao_controller = AutenticacaoController(self, sessao)
@@ -36,3 +36,7 @@ class AplicacaoController:
     def usuario_atual(self, usuario_atual):
         self.__usuario_atual = usuario_atual
         self.__usuario_atual_tipo = "ADMIN"
+
+    @property
+    def sessao(self):
+        return self.__sessao
