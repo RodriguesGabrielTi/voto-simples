@@ -2,26 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb77d4a4-164e-4f1f-8226-ef4365fcb726" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/carregar_dados.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/aplicacao_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/autenticacao_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/application_view.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/voto-simples.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/voto-simples.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/administradores_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/administradores_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/application_controller.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/categorias_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/categorias_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/questoes_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/questoes_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/administrador.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/administrador.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/categoria.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/categoria.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/eleicao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/eleicao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/questao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/questao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/usuario.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/usuario.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1638742944377</updated>
       <workItem from="1638742945781" duration="16427000" />
+      <workItem from="1638826306727" duration="341000" />
     </task>
     <servers />
   </component>
@@ -94,5 +76,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
