@@ -3,12 +3,14 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 
 from settings import UI_PATH
+from views.eleicao import EleicaoUi
 from views.erro import ErroUi
 
 
 class AdminUi(QtWidgets.QMainWindow):
     def __init__(self, aplicacao_controller):
         self.erro_dialog = None
+        self.eleicao_window = None
         self.__controller = aplicacao_controller
         self.__admin_controller = self.__controller.administradores_controller()
         super().__init__()
@@ -38,6 +40,12 @@ class AdminUi(QtWidgets.QMainWindow):
         self.cpf_selected = None
         self.listar_admins()
         self.showMaximized()
+
+        # genericos
+        self.menu_exit = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_exit')
+        self.menu_exit.clicked.connect(self.close)
+        self.eleicao_menu_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_eleicao')
+        self.eleicao_menu_button.clicked.connect(self.abrir_eleicao_window)
 
     def listar_admins(self):
         admins = self.__admin_controller.listar()
@@ -143,3 +151,8 @@ class AdminUi(QtWidgets.QMainWindow):
             self.atualizar_button.setEnabled(False)
             self.cadastrar_button.setEnabled(True)
             self.excluir_button.setEnabled(False)
+
+    def abrir_eleicao_window(self):
+        if self.eleicao_window is None:
+            self.close()
+            self.eleicao_window = EleicaoUi(self.__controller)
