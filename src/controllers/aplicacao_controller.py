@@ -1,6 +1,8 @@
-from src.controllers.administradores_controller import AdministradoresController
-from src.controllers.eleicoes_controller import EleicoesController
-from src.controllers.autenticacao_controller import AutenticacaoController
+import settings
+from controllers.administradores_controller import AdministradoresController
+from controllers.eleicoes_controller import EleicoesController
+from controllers.autenticacao_controller import AutenticacaoController
+from views.login import LoginUi
 
 
 class AplicacaoController:
@@ -10,20 +12,21 @@ class AplicacaoController:
         self.__administradores_controller = AdministradoresController(self, sessao)
         self.__autenticacao_controller = AutenticacaoController(self, sessao)
         self.__usuario_atual = None
-        self.__application_ui = None
+        self.__usuario_atual_tipo = None
 
-    def abrir(self):
-        if self.__usuario_atual is None:
-            self.__autenticacao_controller.abrir()
-        else:
-            pass
-            # self.__application_ui.abrir()
+    def iniciar(self):
+        app = settings.APP
+        window = LoginUi(self)
+        app.exec_()
 
-    def administradores(self):
-        self.__administradores_controller.abrir()
+    def autenticacao_controller(self):
+        return self.__autenticacao_controller
 
-    def eleicoes(self):
-        self.__eleicoes_controller.abrir()
+    def administradores_controller(self):
+        return self.__administradores_controller
+
+    def eleicoes_controller(self):
+        return self.__eleicoes_controller
 
     @property
     def usuario_atual(self):
@@ -32,3 +35,4 @@ class AplicacaoController:
     @usuario_atual.setter
     def usuario_atual(self, usuario_atual):
         self.__usuario_atual = usuario_atual
+        self.__usuario_atual_tipo = "ADMIN"

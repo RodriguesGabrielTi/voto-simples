@@ -1,13 +1,13 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey
 from sqlalchemy.orm import relationship, validates
-from src.models.base_model import BaseModel
-from src.engine import engine
+from models.base_model import BaseModel
+from engine import engine
 
 
 class Questao(BaseModel):
     __tablename__ = 'questoes'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String)
     descricao = Column(Text)
     numero_escolhas = Column(Integer)

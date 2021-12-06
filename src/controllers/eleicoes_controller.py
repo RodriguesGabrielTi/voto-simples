@@ -1,6 +1,6 @@
-from src.models.eleicao import Eleicao
-from src.controllers.questoes_controller import QuestoesController
-from src.controllers.categorias_controller import CategoriasController
+from models.eleicao import Eleicao
+from controllers.questoes_controller import QuestoesController
+from controllers.categorias_controller import CategoriasController
 
 
 class EleicoesController:

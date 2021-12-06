@@ -1,4 +1,4 @@
-from src.models.administrador import Admistrador
+from models.administrador import Administrador
 
 
 class AdministradoresController:
@@ -12,22 +12,27 @@ class AdministradoresController:
         pass
 
     def listar(self):
-        administradores = self.__sessao.query(Admistrador).all()
-        return administradores
+        return self.__sessao.query(Administrador).all()
 
-    def detalhar(self, administrador_id):
-        administrador = self.__sessao.query(Admistrador).get(administrador_id)
-        return administrador
+    def detalhar(self, administrador_cpf) -> dict:
+        administrador = self.__sessao.query(Administrador).filter_by(cpf=administrador_cpf).first()
+        if not administrador:
+            raise ValueError("administrador não achado")
+        return administrador.__dict__
 
     def criar(self, parametros):
-        administrador = Admistrador(nome=parametros["nome"], email=parametros["email"], cpf=parametros["cpf"],
-                                    data_nascimento=parametros["data_nascimento"], endereco=parametros["endereco"],
-                                    ativo=parametros["ativo"])
+        administrador = Administrador(
+            nome=parametros["nome"],
+            cpf=parametros["cpf"],
+            data_nascimento=parametros["data_nascimento"],
+            endereco=parametros["endereco"],
+            ativo=parametros["ativo"]
+        )
         self.__sessao.add(administrador)
         self.__sessao.commit()
 
     def atualizar(self, administrador_id, parametros):
-        administrador = self.__sessao.query(Admistrador).get(administrador_id)
+        administrador = self.__sessao.query(Administrador).get(administrador_id)
         administrador.nome = parametros["nome"]
         administrador.email = parametros["email"]
         administrador.cpf = parametros["cpf"]
@@ -37,6 +42,6 @@ class AdministradoresController:
         self.__sessao.commit()
 
     def excluir(self, administrador_id):
-        administrador = self.__sessao.query(Admistrador).get(administrador_id)
+        administrador = self.__sessao.query(Administrador).get(administrador_id)
         administrador.delete()
         self.__sessao.commit()

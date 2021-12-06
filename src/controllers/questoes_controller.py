@@ -1,4 +1,4 @@
-from src.models.questao import Questao
+from models.questao import Questao
 
 
 class QuestoesController:
