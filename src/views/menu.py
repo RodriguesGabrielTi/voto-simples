@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, uic
 from settings import UI_PATH
 from views.administrador import AdminUi
+from views.eleicao import EleicaoUi
 
 
 class MenuUi(QtWidgets.QMainWindow):
@@ -17,9 +18,20 @@ class MenuUi(QtWidgets.QMainWindow):
         self.admin_button = self.findChild(QtWidgets.QPushButton, 'pushButton_admin')
         self.admin_button.clicked.connect(self.abrir_admin_window)
         self.admin_menu_button.clicked.connect(self.abrir_admin_window)
+
+        self.eleicao_menu_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_eleicao')
+        self.eleicao_button = self.findChild(QtWidgets.QPushButton, 'pushButton_eleicao')
+        self.eleicao_button.clicked.connect(self.abrir_eleicao_window)
+        self.eleicao_menu_button.clicked.connect(self.abrir_eleicao_window)
+
         self.showMaximized()
 
     def abrir_admin_window(self):
         if self.admin_window is None:
             self.close()
             self.admin_window = AdminUi(self.__controllers)
+
+    def abrir_eleicao_window(self):
+        if self.eleicao_window is None:
+            self.close()
+            self.eleicao_window = EleicaoUi(self.__controllers)

@@ -7,10 +7,6 @@ class AdministradoresController:
         self.__aplicacao_controller = aplicacao_controller
         self.__administradores_ui = None
 
-    def abrir(self):
-        # self,__administradores_ui.show()
-        pass
-
     def listar(self):
         return self.__sessao.query(Administrador).all()
 
@@ -34,6 +30,8 @@ class AdministradoresController:
 
     def atualizar(self, administrador_cpf, parametros):
         administrador = self.__sessao.query(Administrador).filter_by(cpf=administrador_cpf).first()
+        if not administrador:
+            raise ValueError("administrador não achado")
         administrador.nome = parametros["nome"]
         administrador.cpf = parametros["cpf"]
         administrador.data_nascimento = parametros["data_nascimento"]

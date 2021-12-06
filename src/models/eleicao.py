@@ -15,7 +15,7 @@ class Eleicao(BaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String)
     descricao = Column(Text)
-    estado = Column(String)
+    estado = Column(String, default="em edicao")
     data_inicio = Column(DateTime)
     data_fim = Column(DateTime)
     questoes = relationship("Questao", back_populates="eleicao", cascade="all, delete")

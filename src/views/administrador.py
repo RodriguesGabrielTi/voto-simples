@@ -108,6 +108,7 @@ class AdminUi(QtWidgets.QMainWindow):
             self.listar_admins()
             self.clean()
             self.cpf_selected = None
+            self.botoes()
         except Exception as e:
             self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))
