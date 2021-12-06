@@ -147,8 +147,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
         }
         for campo in dados:
             if not dados.get(campo):
-                self.mostrar_erro("Preencha todos os campos!")
-                return
+                raise ValueError("Preencha todos os campos!")
         return dados
 
     def mostrar_erro(self, erro):
