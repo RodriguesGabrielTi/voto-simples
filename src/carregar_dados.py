@@ -21,7 +21,8 @@ def carregar(sessao):
                 nome="admin",
                 senha="1234",
                 cpf="00000000000",
-                data_nascimento=date(year=2001, month=10, day=1)
+                data_nascimento=date(year=2001, month=10, day=1),
+                endereco="endereco"
             )
             sessao.add(admin)
             sessao.commit()

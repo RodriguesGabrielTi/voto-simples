@@ -14,6 +14,8 @@ class MenuUi(QtWidgets.QMainWindow):
         self.admin_window = None
         self.eleicao_window = None
 
+        self.menu_exit = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_exit')
+        self.menu_exit.clicked.connect(self.close)
         self.admin_menu_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_admin')
         self.admin_button = self.findChild(QtWidgets.QPushButton, 'pushButton_admin')
         self.admin_button.clicked.connect(self.abrir_admin_window)
@@ -35,3 +37,4 @@ class MenuUi(QtWidgets.QMainWindow):
         if self.eleicao_window is None:
             self.close()
             self.eleicao_window = EleicaoUi(self.__controllers)
+

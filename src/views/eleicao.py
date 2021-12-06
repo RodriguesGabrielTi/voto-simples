@@ -1,6 +1,5 @@
 from PyQt5 import QtWidgets, uic
-from datetime import datetime
-
+from sqlalchemy import Enum
 from settings import UI_PATH
 from views.erro import ErroUi
 from views.publicar import PublicarUi
@@ -19,6 +18,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
         self.nome_field = self.findChild(QtWidgets.QLineEdit, 'lineEdit_nome')
         self.descricao_field = self.findChild(QtWidgets.QLineEdit, 'lineEdit_descricao')
         self.estado_field = self.findChild(QtWidgets.QLineEdit, 'lineEdit_estado')
+        self.estado_field.setEnabled(False)
 
         self.cadastrar_button = self.findChild(QtWidgets.QPushButton, 'pushButton_cadastrar')
         self.cadastrar_button.clicked.connect(self.cadastrar)
@@ -147,8 +147,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
         }
         for campo in dados:
             if not dados.get(campo):
-                self.mostrar_erro("Preencha todos os campos!")
-                return
+                raise ValueError("Preencha todos os campos!")
         return dados
 
     def mostrar_erro(self, erro):
