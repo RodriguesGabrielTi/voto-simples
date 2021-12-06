@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, Table, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, Table, ForeignKey, Enum
 from sqlalchemy.orm import relationship, validates
 from models.base_model import BaseModel
 from models.categoria import Categoria  # não é possível criar o banco de dados sem esse import
@@ -8,6 +8,8 @@ association_table = Table('eleicao_categoria', BaseModel.metadata,
                           Column('eleicao_id', ForeignKey('eleicoes.id')),
                           Column('categoria_id', ForeignKey('categorias.id')))
 
+ESTADOS_PERMITIDOS = ['EM_CRIACAO', 'EM_VOTACAO', 'FINALIZADA']
+
 
 class Eleicao(BaseModel):
     __tablename__ = 'eleicoes'
@@ -15,7 +17,7 @@ class Eleicao(BaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String)
     descricao = Column(Text)
-    estado = Column(String, default="em edicao")
+    estado = Column(String, default=ESTADOS_PERMITIDOS[0])
     data_inicio = Column(DateTime)
     data_fim = Column(DateTime)
     questoes = relationship("Questao", back_populates="eleicao", cascade="all, delete")
@@ -32,6 +34,12 @@ class Eleicao(BaseModel):
         if len(descricao) < 3 or len(descricao) > 50:
             raise ValueError("Descricao inválida")
         return descricao
+
+    @validates('estado')
+    def validar_estado(self, key, estado):
+        if estado not in ESTADOS_PERMITIDOS:
+            raise ValueError("Estado inválida")
+        return estado
 
 
 BaseModel.metadata.create_all(engine)

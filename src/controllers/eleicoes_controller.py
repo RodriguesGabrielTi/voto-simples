@@ -28,6 +28,7 @@ class EleicoesController:
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         if not eleicao:
             raise ValueError("Eleicao não encontrada")
+        self.checar_permissao_para_modificar(eleicao)
         eleicao.nome = parametros["nome"]
         eleicao.descricao = parametros["descricao"]
         self.__sessao.commit()
@@ -36,6 +37,7 @@ class EleicoesController:
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         if not eleicao:
             raise ValueError("Eleicao não encontrada")
+        self.checar_permissao_para_modificar(eleicao)
         self.__sessao.delete(eleicao)
         self.__sessao.commit()
 
@@ -43,9 +45,14 @@ class EleicoesController:
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         if not eleicao:
             raise ValueError("Eleicao não encontrada")
+        if eleicao.estado == 'EM_VOTACAO':
+            raise ValueError("Eleicao já publicada")
+        if eleicao.estado == 'FINALIZADA':
+            raise ValueError("Eleicao já finalizada")
+
         eleicao.data_inicio = parametros["data_inicio"]
         eleicao.data_fim = parametros["data_fim"]
-        eleicao.estado = "publicada"
+        eleicao.estado = "EM_VOTACAO"
         self.__sessao.commit()
 
     def questoes(self, eleicao_id):
@@ -59,3 +66,8 @@ class EleicoesController:
         if not eleicao:
             raise ValueError("Eleicao não encontrada")
         CategoriasController(eleicao, self.__sessao).abrir()
+
+    def checar_permissao_para_modificar(self, eleicao: Eleicao):
+        if eleicao.estado != 'EM_CRIACAO':
+            raise ValueError("Só é possível alterar eleição em criação")
+
