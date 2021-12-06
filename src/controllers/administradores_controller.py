@@ -26,22 +26,25 @@ class AdministradoresController:
             cpf=parametros["cpf"],
             data_nascimento=parametros["data_nascimento"],
             endereco=parametros["endereco"],
-            ativo=parametros["ativo"]
+            ativo=parametros["ativo"],
+            senha=parametros["senha"]
         )
         self.__sessao.add(administrador)
         self.__sessao.commit()
 
-    def atualizar(self, administrador_id, parametros):
-        administrador = self.__sessao.query(Administrador).get(administrador_id)
+    def atualizar(self, administrador_cpf, parametros):
+        administrador = self.__sessao.query(Administrador).filter_by(cpf=administrador_cpf).first()
         administrador.nome = parametros["nome"]
-        administrador.email = parametros["email"]
         administrador.cpf = parametros["cpf"]
         administrador.data_nascimento = parametros["data_nascimento"]
         administrador.endereco = parametros["endereco"]
         administrador.ativo = parametros["ativo"]
+        administrador.senha = parametros["senha"]
         self.__sessao.commit()
 
-    def excluir(self, administrador_id):
-        administrador = self.__sessao.query(Administrador).get(administrador_id)
-        administrador.delete()
+    def excluir(self, administrador_cpf):
+        administrador = self.__sessao.query(Administrador).filter_by(cpf=administrador_cpf).first()
+        if not administrador:
+            raise ValueError("administrador não achado")
+        self.__sessao.delete(administrador)
         self.__sessao.commit()

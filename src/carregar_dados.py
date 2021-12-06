@@ -18,10 +18,8 @@ def carregar(sessao):
     with sessao.begin():
         if len(sessao.query(Administrador).all()) == 0:
             admin = Administrador(
-                id=1,
                 nome="admin",
                 senha="1234",
-                email="admin@gmail.com.br",
                 cpf="00000000000",
                 data_nascimento=date(year=2001, month=10, day=1)
             )

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, Integer, String, Date, Boolean
+from sqlalchemy import Column, String, Date, Boolean
 from sqlalchemy.orm import validates
 from sqlalchemy.sql import func
 from models.base_model import BaseModel
@@ -9,11 +9,9 @@ import re
 class Usuario(BaseModel):
     __abstract__ = True
 
-    id = Column(Integer, primary_key=True)
     nome = Column(String)
-    email = Column(String)
     data_nascimento = Column(Date)
-    cpf = Column(String, primary_key=True)
+    cpf = Column(String, unique=True)
     endereco = Column(String)
     ativo = Column(Boolean, default=True)
     criado_em = Column(Date, server_default=func.now())
@@ -23,12 +21,6 @@ class Usuario(BaseModel):
         if len(nome) < 3 or len(nome) > 50:
             raise ValueError("Nome inválido")
         return nome
-
-    @validates('email')
-    def validar_email(self, key, email):
-        if '@' not in email:
-            raise ValueError("Email inválido")
-        return email
 
     @validates('cpf')
     def validar_cpf(self, key, cpf):
