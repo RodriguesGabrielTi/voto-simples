@@ -35,7 +35,7 @@ class AdministradoresController:
         administrador.nome = parametros["nome"]
         administrador.cpf = parametros["cpf"]
         administrador.data_nascimento = parametros["data_nascimento"]
-        administrador.endereco = parametros["endereco"]
+        administrador.endereco = parametros["endereco"] if parametros["endereco"] else ""
         administrador.ativo = parametros["ativo"]
         administrador.senha = parametros["senha"]
         self.__sessao.commit()

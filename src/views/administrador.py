@@ -39,7 +39,6 @@ class AdminUi(QtWidgets.QMainWindow):
         self.listar_admins()
         self.showMaximized()
 
-
     def listar_admins(self):
         admins = self.__admin_controller.listar()
         self.table.setRowCount(0)
@@ -93,7 +92,7 @@ class AdminUi(QtWidgets.QMainWindow):
     def atualizar(self):
         try:
             dados = self.validate_fields()
-            self.__admin_controller.atualizar(dados["cpf"], dados)
+            self.__admin_controller.atualizar(self.cpf_selected, dados)
             self.carregar_fields()
             self.listar_admins()
         except Exception as e:
@@ -128,8 +127,7 @@ class AdminUi(QtWidgets.QMainWindow):
         }
         for campo in dados:
             if not dados.get(campo):
-                self.mostrar_erro("Preencha todos os campos!")
-                return
+                raise ValueError("Preencha todos os campos!")
         dados["ativo"] = self.ativo_checkbox.isChecked()
         return dados
 
