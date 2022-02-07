@@ -1,5 +1,4 @@
 from PyQt5 import QtWidgets, uic
-from sqlalchemy import Enum
 from settings import UI_PATH
 from views.erro import ErroUi
 from views.publicar import PublicarUi
@@ -56,14 +55,25 @@ class EleicaoUi(QtWidgets.QMainWindow):
         eleicoes = self.__eleicoes_controller.listar()
         self.table.setRowCount(0)
         for eleicao in eleicoes:
+            print(eleicao)
             position = self.table.rowCount()
             self.table.insertRow(position)
             self.table.setItem(position, 0, QtWidgets.QTableWidgetItem(str(eleicao.id)))
             self.table.setItem(position, 1, QtWidgets.QTableWidgetItem(eleicao.nome))
-            self.table.setItem(position, 2, QtWidgets.QTableWidgetItem(
-                eleicao.data_inicio.strftime("%d/%m/%Y, %H:%M") if eleicao.data_inicio else "nao publicada"))
-            self.table.setItem(position, 3, QtWidgets.QTableWidgetItem(
-                eleicao.data_fim.strftime("%d/%m/%Y, %H:%M") if eleicao.data_inicio else "nao publicada"))
+            self.table.setItem(
+                position,
+                2,
+                QtWidgets.QTableWidgetItem(
+                    eleicao.data_inicio.strftime("%d/%m/%Y, %H:%M") if eleicao.data_inicio else "não publicada"
+                )
+            )
+            self.table.setItem(
+                position,
+                3,
+                QtWidgets.QTableWidgetItem(
+                    eleicao.data_fim.strftime("%d/%m/%Y, %H:%M") if eleicao.data_fim else "não finalizada"
+                )
+            )
             self.table.setItem(position, 4, QtWidgets.QTableWidgetItem(eleicao.estado))
 
     def on_click(self):

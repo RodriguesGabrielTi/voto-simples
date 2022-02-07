@@ -21,7 +21,7 @@ class Eleicao(BaseModel):
     data_inicio = Column(DateTime)
     data_fim = Column(DateTime)
     questoes = relationship("Questao", back_populates="eleicao", cascade="all, delete")
-    categorias = relationship("Categoria", secondary=association_table)
+    categorias_validas = relationship("Categoria", secondary=association_table)
 
     @validates('nome')
     def validar_nome(self, key, nome):
@@ -40,6 +40,11 @@ class Eleicao(BaseModel):
         if estado not in ESTADOS_PERMITIDOS:
             raise ValueError("Estado inválida")
         return estado
+
+    @validates('data_fim')
+    def validar_data_fim(self, key, data_fim):
+        if data_fim < self.data_inicio:
+            raise ValueError("Data de fim não pode ser menor que a data de início(agora)")
 
 
 BaseModel.metadata.create_all(engine)

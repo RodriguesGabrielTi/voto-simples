@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="bb77d4a4-164e-4f1f-8226-ef4365fcb726" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/administrador.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/administrador.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/ui/eleicoes.ui" beforeDir="false" afterPath="$PROJECT_DIR$/statics/ui/eleicoes.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/eleicao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/eleicao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/eleicao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/eleicao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/publicar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/ui/publicar.ui" beforeDir="false" afterPath="$PROJECT_DIR$/statics/ui/publicar.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +80,7 @@
       <updated>1638742944377</updated>
       <workItem from="1638742945781" duration="16427000" />
       <workItem from="1638826306727" duration="4100000" />
+      <workItem from="1644183931020" duration="2559000" />
     </task>
     <servers />
   </component>

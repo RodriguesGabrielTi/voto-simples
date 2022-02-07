@@ -5,6 +5,7 @@ from engine import engine
 
 CATEGORIAS_PERMITIDAS = ['estudante', 'professor', 'tae']
 
+
 class Categoria(BaseModel):
     __tablename__ = 'categorias'
 

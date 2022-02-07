@@ -3,16 +3,16 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 
 from settings import UI_PATH
-from views.eleicao import EleicaoUi
 from views.erro import ErroUi
 
 
 class AdminUi(QtWidgets.QMainWindow):
-    def __init__(self, aplicacao_controller):
+    def __init__(self, aplicacao_controller, main_window):
         self.erro_dialog = None
-        self.eleicao_window = None
+        self.main_window = None
         self.__controller = aplicacao_controller
         self.__admin_controller = self.__controller.administradores_controller()
+        self.__main_window = main_window
         super().__init__()
 
         uic.loadUi(f"{UI_PATH}/administradores.ui", self)
@@ -44,8 +44,8 @@ class AdminUi(QtWidgets.QMainWindow):
         # genericos
         self.menu_exit = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_exit')
         self.menu_exit.clicked.connect(self.close)
-        self.eleicao_menu_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_eleicao')
-        self.eleicao_menu_button.clicked.connect(self.abrir_eleicao_window)
+        self.main_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_main')
+        self.main_button.clicked.connect(self.abrir_main_window)
 
     def listar_admins(self):
         admins = self.__admin_controller.listar()
@@ -152,7 +152,7 @@ class AdminUi(QtWidgets.QMainWindow):
             self.cadastrar_button.setEnabled(True)
             self.excluir_button.setEnabled(False)
 
-    def abrir_eleicao_window(self):
-        if self.eleicao_window is None:
-            self.close()
-            self.eleicao_window = EleicaoUi(self.__controller)
+    def abrir_main_window(self):
+        self.close()
+        self.__main_window.show()
+
