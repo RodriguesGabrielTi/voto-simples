@@ -14,7 +14,7 @@ class Usuario(BaseModel):
     cpf = Column(String, unique=True)
     endereco = Column(String)
     ativo = Column(Boolean, default=True)
-    criado_em = Column(Date, server_default=func.now())
+    data_de_criacao = Column(Date, server_default=func.now())  # Trocar nome (diagrama)
 
     @validates('nome')
     def validar_nome(self, key, nome):

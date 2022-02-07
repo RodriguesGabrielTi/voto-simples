@@ -1,3 +1,5 @@
+import datetime
+
 from PyQt5 import QtWidgets, uic
 
 from settings import UI_PATH
@@ -19,13 +21,16 @@ class PublicarUi(QtWidgets.QDialog):
         self.showNormal()
 
     def enviar(self):
-        dados = {
-            "data_inicio": self.data_inicio.dateTime().toPyDateTime(),
-            "data_fim": self.data_fim.dateTime().toPyDateTime()
-        }
-        self.eleicao_view.enviar_publicacao(dados)
-        self.close()
-
+        try:
+            dados = {
+                "data_fim": self.data_fim.dateTime().toPyDateTime(),
+                "data_inicio": datetime.datetime.today()
+            }
+            self.eleicao_view.enviar_publicacao(dados)
+            self.close()
+        except ValueError as e:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro(str(e))
 
     def cancelar(self):
         self.close()

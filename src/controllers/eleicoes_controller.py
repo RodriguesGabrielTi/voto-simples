@@ -16,7 +16,7 @@ class EleicoesController:
     def detalhar(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         if not eleicao:
-            raise ValueError("Eleicao não encontrada")
+            raise ValueError("Eleicão não encontrada")
         return eleicao.__dict__
 
     def criar(self, parametros):
