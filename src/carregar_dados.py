@@ -1,6 +1,15 @@
 from datetime import date
-from models.administrador import Administrador
 from models.categoria import Categoria
+from models.administrador import Administrador
+from models.candidato import Candidato
+from models.eleicao import Eleicao
+from models.questao import Questao
+from models.voto import Voto
+
+from models.base_model import BaseModel
+from engine import engine
+
+BaseModel.metadata.create_all(engine)
 
 
 def carregar(sessao):
