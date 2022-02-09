@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey
 from sqlalchemy.orm import relationship, validates
 from models.base_model import BaseModel
-from engine import engine
 
 
 class Questao(BaseModel):
@@ -11,8 +10,9 @@ class Questao(BaseModel):
     nome = Column(String)
     descricao = Column(Text)
     numero_escolhas = Column(Integer)
+    candidatos = relationship("Candidato", back_populates="questao", cascade="all, delete")
     eleicao_id = Column(Integer, ForeignKey('eleicoes.id'))
-    eleicao = relationship('Eleicao', back_populates="questoes")
+    eleicao = relationship("Eleicao", back_populates="questoes")
 
     @validates('nome')
     def validar_nome(self, key, nome):
@@ -33,4 +33,4 @@ class Questao(BaseModel):
         return address
 
 
-BaseModel.metadata.create_all(engine)
+

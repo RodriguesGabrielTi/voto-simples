@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import validates
 from models.base_model import BaseModel
-from engine import engine
+
 
 CATEGORIAS_PERMITIDAS = ['estudante', 'professor', 'tae']
 
@@ -19,4 +19,4 @@ class Categoria(BaseModel):
         return nome
 
 
-BaseModel.metadata.create_all(engine)
+
