@@ -2,10 +2,12 @@ from PyQt5 import QtWidgets, uic
 from settings import UI_PATH
 from views.erro import ErroUi
 from views.publicar import PublicarUi
+from views.questao import QuestaoUi
 
 
 class EleicaoUi(QtWidgets.QMainWindow):
     def __init__(self, aplicacao_controller):
+        self.questoes_window = None
         self.erro_dialog = None
         self.publicar_dialog = None
         self.__controller = aplicacao_controller
@@ -148,7 +150,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
         pass
 
     def questoes(self):
-        pass
+        self.questoes_window = QuestaoUi(self.__controller, self.__eleicoes_controller.questoes(self.id_selected))
 
     def validate_fields(self):
         dados = {
@@ -169,9 +171,13 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.cadastrar_button.setEnabled(False)
             self.excluir_button.setEnabled(True)
             self.publicar_button.setEnabled(True)
+            self.questoes_button.setEnabled(True)
         else:
             self.atualizar_button.setEnabled(False)
             self.cadastrar_button.setEnabled(True)
             self.excluir_button.setEnabled(False)
             self.publicar_button.setEnabled(False)
+            self.questoes_button.setEnabled(False)
+
+
 

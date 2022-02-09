@@ -59,7 +59,7 @@ class EleicoesController:
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         if not eleicao:
             raise ValueError("Eleicao não encontrada")
-        QuestoesController(eleicao, self.__sessao).abrir()
+        return QuestoesController(eleicao, self.__sessao, self.__aplicacao_controller)
 
     def categorias(self, eleicao_id):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
