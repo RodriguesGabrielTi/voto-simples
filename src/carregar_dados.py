@@ -5,6 +5,8 @@ from models.candidato import Candidato
 from models.eleicao import Eleicao
 from models.questao import Questao
 from models.voto import Voto
+from models.mesario import Mesario
+from models.eleicao_mesario import EleicaoMesario
 
 from models.base_model import BaseModel
 from engine import engine

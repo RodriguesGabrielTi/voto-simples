@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb77d4a4-164e-4f1f-8226-ef4365fcb726" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/models/eleicao_mesario.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/mesario.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statics/ui/mesarios.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/eleicao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/eleicao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/eleicao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/eleicao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/publicar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/ui/publicar.ui" beforeDir="false" afterPath="$PROJECT_DIR$/statics/ui/publicar.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/carregar_dados.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/carregar_dados.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,12 +40,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="feature/improvements" />
-                    <option name="lastUsedInstant" value="1638826497" />
+                    <option name="branchName" value="feature/mesarios" />
+                    <option name="lastUsedInstant" value="1644453949" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="Feature/Views" />
-                    <option name="lastUsedInstant" value="1638826496" />
+                    <option name="branchName" value="feature/improvements" />
+                    <option name="lastUsedInstant" value="1638826497" />
                   </RecentBranch>
                 </list>
               </option>
@@ -67,8 +65,15 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/models" />
     <property name="settings.editor.selected.configurable" value="LogHighlighting" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="\\wsl$\Ubuntu\home\gabriel\workspace\learn\voto-simples\src\models" />
+      <recent name="\\wsl$\Ubuntu\home\gabriel\workspace\learn\voto-simples\src" />
+      <recent name="\\wsl$\Ubuntu\home\gabriel\workspace\learn\voto-simples\statics\ui" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -81,6 +86,8 @@
       <workItem from="1638742945781" duration="16427000" />
       <workItem from="1638826306727" duration="4100000" />
       <workItem from="1644183931020" duration="2559000" />
+      <workItem from="1644453829798" duration="770000" />
+      <workItem from="1644498037692" duration="18000" />
     </task>
     <servers />
   </component>
