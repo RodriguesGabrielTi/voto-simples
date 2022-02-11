@@ -1,6 +1,6 @@
+from models.categoria import Categoria
 from models.eleicao import Eleicao
 from controllers.questoes_controller import QuestoesController
-from controllers.categorias_controller import CategoriasController
 
 
 class EleicoesController:
@@ -61,11 +61,23 @@ class EleicoesController:
             raise ValueError("Eleicao não encontrada")
         return QuestoesController(eleicao, self.__sessao, self.__aplicacao_controller)
 
-    def categorias(self, eleicao_id):
+    def categorias(self, eleicao_id, categorias):
         eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
         if not eleicao:
             raise ValueError("Eleicao não encontrada")
-        CategoriasController(eleicao, self.__sessao).abrir()
+        eleicao.categorias_validas = []
+        for categoria in categorias:
+            eleicao.categorias_validas.append(self.__sessao.query(Categoria).filter_by(nome=categoria).first())
+        self.__sessao.commit()
+
+    def categorias_string(self, eleicao_id):
+        eleicao = self.__sessao.query(Eleicao).get(eleicao_id)
+        if not eleicao:
+            raise ValueError("Eleicao não encontrada")
+        categorias_string = ""
+        for categoria in eleicao.categorias_validas:
+            categorias_string += categoria.nome + ', '
+        return categorias_string
 
     def checar_permissao_para_modificar(self, eleicao: Eleicao):
         if eleicao.estado != 'EM_CRIACAO':
