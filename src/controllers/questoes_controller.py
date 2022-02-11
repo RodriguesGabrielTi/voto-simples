@@ -1,3 +1,4 @@
+from controllers.candidatos_controller import CandidatosController
 from models.questao import Questao
 
 
@@ -35,8 +36,13 @@ class QuestoesController:
 
     def excluir(self, questao_id):
         questao = self.__sessao.query(Questao).get(questao_id)
+        if not questao:
+            raise ValueError("Questao não encontrada")
         self.__sessao.delete(questao)
         self.__sessao.commit()
 
-    def candidatos(self):
-        pass
+    def candidatos(self, questao_id):
+        questao = self.__sessao.query(Questao).get(questao_id)
+        if not questao:
+            raise ValueError("Questao não encontrada")
+        return CandidatosController(questao, self.__sessao, self.__aplicacao_controller)
