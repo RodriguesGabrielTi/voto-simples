@@ -1,4 +1,5 @@
 from models.administrador import Administrador
+from models.mesario import Mesario
 
 
 class AutenticacaoController:
@@ -10,9 +11,12 @@ class AutenticacaoController:
 
     def autenticar(self, cpf, senha):
         administrador = self.__sessao.query(Administrador).filter_by(cpf=cpf, senha=senha).first()
-        if not administrador:
+        mesario = self.__sessao.query(Mesario).filter_by(cpf=cpf, senha=senha).first()
+        if not administrador and not mesario:
             raise ValueError("Usuário ou senha incorretos")
-        else:
-            print(administrador)
+
+        if administrador:
             self.__aplicacao_controller.usuario_atual = administrador
+        elif mesario:
+            self.__aplicacao_controller.usuario_atual = mesario
         return True

@@ -1,8 +1,11 @@
 from PyQt5 import QtWidgets, uic
 
+from models.administrador import Administrador
+from models.mesario import Mesario
 from settings import UI_PATH
 from views.erro import ErroUi
 from views.menu import MenuUi
+from views.selecao_eleicao import SelecaoEleicaoUi
 
 
 class LoginUi(QtWidgets.QDialog):
@@ -30,7 +33,11 @@ class LoginUi(QtWidgets.QDialog):
         try:
             self.__controller.autenticacao_controller().autenticar(cpf, senha)
             self.close()
-            self.open_menu()
+            print(type(self.__controller.usuario_atual))
+            if isinstance(self.__controller.usuario_atual, Administrador):
+                self.open_menu()
+            elif isinstance(self.__controller.usuario_atual, Mesario):
+                self.open_selecao_eleicao()
         except ValueError:
             self.__controller.sessao.rollback()
             self.mostrar_erro("Usuário ou senha incorretos")
@@ -38,6 +45,11 @@ class LoginUi(QtWidgets.QDialog):
     def open_menu(self):
         if self.menu_window is None:
             self.menu_window = MenuUi(self.__controller)
+            self.menu_window.show()
+
+    def open_selecao_eleicao(self):
+        if self.menu_window is None:
+            self.menu_window = SelecaoEleicaoUi(self.__controller)
             self.menu_window.show()
 
     def mostrar_erro(self, erro):

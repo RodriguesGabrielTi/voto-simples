@@ -3,15 +3,17 @@ from settings import UI_PATH
 from views.erro import ErroUi
 from views.publicar import PublicarUi
 from views.questao import QuestaoUi
+from views.vincular_mesario import VincularMesarioUi
 
 
 class EleicaoUi(QtWidgets.QMainWindow):
-    def __init__(self, aplicacao_controller):
+    def __init__(self, aplicacao_controller, main_window):
         self.questoes_window = None
         self.erro_dialog = None
         self.publicar_dialog = None
         self.__controller = aplicacao_controller
         self.__eleicoes_controller = self.__controller.eleicoes_controller()
+        self.__main_window = main_window
         super().__init__()
 
         uic.loadUi(f"{UI_PATH}/eleicoes.ui", self)
@@ -47,6 +49,13 @@ class EleicaoUi(QtWidgets.QMainWindow):
         self.questoes_button = self.findChild(QtWidgets.QPushButton, 'pushButton_questoes')
         self.questoes_button.setEnabled(False)
         self.questoes_button.clicked.connect(self.questoes)
+
+        self.mesarios_button = self.findChild(QtWidgets.QPushButton, 'pushButton_mesarios')
+        self.mesarios_button.setEnabled(False)
+        self.mesarios_button.clicked.connect(self.mesarios)
+
+        self.main_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_main')
+        self.main_button.clicked.connect(self.abrir_main_window)
 
         self.table.clicked.connect(self.on_click)
         self.id_selected = None
@@ -152,6 +161,9 @@ class EleicaoUi(QtWidgets.QMainWindow):
     def questoes(self):
         self.questoes_window = QuestaoUi(self.__controller, self.__eleicoes_controller.questoes(self.id_selected))
 
+    def mesarios(self):
+        self.mesarios_window = VincularMesarioUi(self.__controller, self.id_selected)
+
     def validate_fields(self):
         dados = {
             "nome": self.nome_field.text(),
@@ -172,12 +184,15 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.excluir_button.setEnabled(True)
             self.publicar_button.setEnabled(True)
             self.questoes_button.setEnabled(True)
+            self.mesarios_button.setEnabled(True)
         else:
             self.atualizar_button.setEnabled(False)
             self.cadastrar_button.setEnabled(True)
             self.excluir_button.setEnabled(False)
             self.publicar_button.setEnabled(False)
             self.questoes_button.setEnabled(False)
+            self.mesarios_button.setEnabled(False)
 
-
-
+    def abrir_main_window(self):
+        self.close()
+        self.__main_window.show()

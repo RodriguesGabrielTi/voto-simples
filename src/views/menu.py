@@ -39,7 +39,7 @@ class MenuUi(QtWidgets.QMainWindow):
     def abrir_eleicao_window(self):
         if self.eleicao_window is None:
             self.close()
-            self.eleicao_window = EleicaoUi(self.__controllers)
+            self.eleicao_window = EleicaoUi(self.__controllers, MenuUi(self.__controllers))
 
     def abrir_mesario_window(self):
         if self.mesarios_window is None:
