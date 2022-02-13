@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, uic
 from settings import UI_PATH
 from views.administrador import AdminUi
 from views.eleicao import EleicaoUi
+from views.mesario import MesarioUi
 
 
 class MenuUi(QtWidgets.QMainWindow):
@@ -17,6 +18,10 @@ class MenuUi(QtWidgets.QMainWindow):
         uic.loadUi(f"{UI_PATH}/menu.ui", self)
         self.menu_exit = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_exit')
         self.menu_exit.clicked.connect(self.close)
+
+        self.mesarios_button = self.findChild(QtWidgets.QPushButton, 'pushButton_mesarios')
+        self.mesarios_button.clicked.connect(self.abrir_mesario_window)
+
         self.admin_button = self.findChild(QtWidgets.QPushButton, 'pushButton_admin')
         self.admin_button.clicked.connect(self.abrir_admin_window)
 
@@ -34,5 +39,10 @@ class MenuUi(QtWidgets.QMainWindow):
     def abrir_eleicao_window(self):
         if self.eleicao_window is None:
             self.close()
-            self.eleicao_window = EleicaoUi(self.__controllers)
+            self.eleicao_window = EleicaoUi(self.__controllers, MenuUi(self.__controllers))
+
+    def abrir_mesario_window(self):
+        if self.mesarios_window is None:
+            self.close()
+            self.mesarios_window = MesarioUi(self.__controllers, MenuUi(self.__controllers))
 

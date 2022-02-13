@@ -1,6 +1,8 @@
 from models.eleicao import Eleicao
 from controllers.questoes_controller import QuestoesController
 from controllers.categorias_controller import CategoriasController
+from models.eleicao_mesario import EleicaoMesario
+from models.mesario import Mesario
 
 
 class EleicoesController:
@@ -71,3 +73,14 @@ class EleicoesController:
         if eleicao.estado != 'EM_CRIACAO':
             raise ValueError("Só é possível alterar eleição em criação")
 
+    def listar_mesario_eleicoes(self, mesario: Mesario):
+        eleicoes = self.__sessao.query(
+            Eleicao
+        ).join(
+            EleicaoMesario
+        ).filter(
+            EleicaoMesario.mesario_id == mesario.id,
+            EleicaoMesario.eleicao_id == Eleicao.id,
+            Eleicao.estado == "EM_VOTACAO"
+        ).all()
+        return eleicoes

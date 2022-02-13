@@ -2,6 +2,7 @@ import settings
 from controllers.administradores_controller import AdministradoresController
 from controllers.eleicoes_controller import EleicoesController
 from controllers.autenticacao_controller import AutenticacaoController
+from controllers.mesario_controller import MesarioController
 from views.login import LoginUi
 
 
@@ -11,6 +12,7 @@ class AplicacaoController:
         self.__eleicoes_controller = EleicoesController(self, sessao)
         self.__administradores_controller = AdministradoresController(self, sessao)
         self.__autenticacao_controller = AutenticacaoController(self, sessao)
+        self.__mesario_controller = MesarioController(self, sessao)
         self.__usuario_atual = None
         self.__usuario_atual_tipo = None
 
@@ -27,6 +29,9 @@ class AplicacaoController:
 
     def eleicoes_controller(self):
         return self.__eleicoes_controller
+
+    def mesarios_controller(self):
+        return self.__mesario_controller
 
     @property
     def usuario_atual(self):
