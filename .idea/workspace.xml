@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb77d4a4-164e-4f1f-8226-ef4365fcb726" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/selecao_eleicao.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/vincular_mesario.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/ui/selecionar_eleicao.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/ui/vincular_mesario.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/autenticacao_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/autenticacao_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/mesario_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/mesario_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/eleicao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/eleicao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/ui/mesarios.ui" beforeDir="false" afterPath="$PROJECT_DIR$/statics/ui/mesarios.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/mesario.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/mesario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +94,7 @@
       <workItem from="1644498037692" duration="18000" />
       <workItem from="1644537650807" duration="3197000" />
       <workItem from="1644576945701" duration="955000" />
-      <workItem from="1644772405717" duration="8168000" />
+      <workItem from="1644772405717" duration="10055000" />
     </task>
     <servers />
   </component>
