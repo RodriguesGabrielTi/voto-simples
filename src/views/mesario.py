@@ -3,16 +3,18 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 
 from settings import UI_PATH
+from views.eleicao import EleicaoUi
 from views.erro import ErroUi
 
 
 class MesarioUi(QtWidgets.QMainWindow):
-    def __init__(self, aplicacao_controller, main_window):
+    def __init__(self, aplicacao_controller, main_window, eleicao_window):
         self.erro_dialog = None
         self.main_window = None
         self.__controller = aplicacao_controller
         self.__mesario_controller = self.__controller.mesarios_controller()
         self.__main_window = main_window
+        self.__eleicao_window = eleicao_window
         super().__init__()
 
         uic.loadUi(f"{UI_PATH}/mesarios.ui", self)
@@ -35,6 +37,9 @@ class MesarioUi(QtWidgets.QMainWindow):
         self.excluir_button = self.findChild(QtWidgets.QPushButton, 'pushButton_excluir')
         self.excluir_button.setEnabled(False)
         self.excluir_button.clicked.connect(self.excluir)
+        self.vincular_eleicoes = self.findChild(QtWidgets.QPushButton, 'pushButton_vincular_eleicoes')
+        self.vincular_eleicoes.setEnabled(True)
+        self.vincular_eleicoes.clicked.connect(self.abrir_eleicao)
 
         self.table.clicked.connect(self.on_click)
         self.cpf_selected = None
@@ -155,4 +160,8 @@ class MesarioUi(QtWidgets.QMainWindow):
     def abrir_main_window(self):
         self.close()
         self.__main_window.show()
+
+    def abrir_eleicao(self):
+        self.close()
+        self.__eleicao_window.show()
 

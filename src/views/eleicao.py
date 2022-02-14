@@ -16,6 +16,8 @@ class EleicaoUi(QtWidgets.QMainWindow):
         self.__main_window = main_window
         super().__init__()
 
+
+    def show(self) -> None:
         uic.loadUi(f"{UI_PATH}/eleicoes.ui", self)
         self.table: QtWidgets.QTableWidget = self.findChild(QtWidgets.QTableWidget, 'table')
         self.nome_field = self.findChild(QtWidgets.QLineEdit, 'lineEdit_nome')
@@ -61,6 +63,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
         self.id_selected = None
         self.listar_eleicoes()
         self.showMaximized()
+        super().show()
 
     def listar_eleicoes(self):
         eleicoes = self.__eleicoes_controller.listar()
