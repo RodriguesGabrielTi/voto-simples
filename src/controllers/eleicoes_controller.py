@@ -52,6 +52,15 @@ class EleicoesController:
         if eleicao.estado == 'FINALIZADA':
             raise ValueError("Eleicao já finalizada")
 
+        if not eleicao.questoes:
+            raise ValueError("Eleicao sem questões cadastradas")
+        for questao in eleicao.questoes:
+            if not questao.candidatos:
+                raise ValueError("Existem questões sem candidatos cadastrados")
+
+        if not self.__sessao.query(EleicaoMesario).filter_by(eleicao_id=eleicao.id).all():
+            raise ValueError("Não existem mesários cadastrados")
+
         eleicao.data_inicio = parametros["data_inicio"]
         eleicao.data_fim = parametros["data_fim"]
         eleicao.estado = "EM_VOTACAO"

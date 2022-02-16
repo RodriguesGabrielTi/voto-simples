@@ -153,10 +153,8 @@ class CandidatoUi(QtWidgets.QMainWindow):
 
     def dropEvent(self, event):
         if event.mimeData().hasImage:
-            print("AQUI3")
             event.setDropAction(QtCore.Qt.CopyAction)
             file_path = event.mimeData().urls()[0].toLocalFile()
-            print(file_path)
             self.set_image(file_path)
             event.accept()
         else:
