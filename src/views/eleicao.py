@@ -59,6 +59,9 @@ class EleicaoUi(QtWidgets.QMainWindow):
         self.main_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_main')
         self.main_button.clicked.connect(self.abrir_main_window)
 
+        self.menu_exit = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_exit')
+        self.menu_exit.clicked.connect(self.close)
+
         self.table.clicked.connect(self.on_click)
         self.id_selected = None
         self.listar_eleicoes()
