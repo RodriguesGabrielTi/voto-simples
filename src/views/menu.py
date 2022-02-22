@@ -3,13 +3,14 @@ from settings import UI_PATH
 from views.administrador import AdminUi
 from views.eleicao import EleicaoUi
 from views.mesario import MesarioUi
+from views.votante import VotanteUi
 
 
 class MenuUi(QtWidgets.QMainWindow):
     def __init__(self, aplicacao_controller):
         super().__init__()
         self.__controllers = aplicacao_controller
-        self.votantes_window = None
+        self.votante_window = None
         self.mesarios_window = None
         self.admin_window = None
         self.eleicao_window = None
@@ -27,6 +28,9 @@ class MenuUi(QtWidgets.QMainWindow):
 
         self.eleicao_button = self.findChild(QtWidgets.QPushButton, 'pushButton_eleicao')
         self.eleicao_button.clicked.connect(self.abrir_eleicao_window)
+
+        self.votante_button = self.findChild(QtWidgets.QPushButton, 'pushButton_votantes')
+        self.votante_button.clicked.connect(self.abrir_votante_window)
 
         self.showMaximized()
         super().show()
@@ -50,4 +54,9 @@ class MenuUi(QtWidgets.QMainWindow):
                 MenuUi(self.__controllers),
                 EleicaoUi(self.__controllers, MenuUi(self.__controllers))
             )
+
+    def abrir_votante_window(self):
+        if self.votante_window is None:
+            self.close()
+            self.eleicao_window = VotanteUi(self.__controllers, MenuUi(self.__controllers))
 

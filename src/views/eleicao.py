@@ -4,10 +4,12 @@ from views.erro import ErroUi
 from views.publicar import PublicarUi
 from views.questao import QuestaoUi
 from views.vincular_mesario import VincularMesarioUi
+from views.categoria import CategoriaUi
 
 
 class EleicaoUi(QtWidgets.QMainWindow):
     def __init__(self, aplicacao_controller, main_window):
+        self.categorias_window = None
         self.questoes_window = None
         self.erro_dialog = None
         self.publicar_dialog = None
@@ -46,7 +48,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
 
         self.categorias_button = self.findChild(QtWidgets.QPushButton, 'pushButton_categorias')
         self.categorias_button.setEnabled(False)
-        self.excluir_button.clicked.connect(self.categorias)
+        self.categorias_button.clicked.connect(self.categorias)
 
         self.questoes_button = self.findChild(QtWidgets.QPushButton, 'pushButton_questoes')
         self.questoes_button.setEnabled(False)
@@ -56,6 +58,9 @@ class EleicaoUi(QtWidgets.QMainWindow):
         self.mesarios_button.setEnabled(False)
         self.mesarios_button.clicked.connect(self.mesarios)
 
+        # genericos
+        self.menu_exit = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_exit')
+        self.menu_exit.clicked.connect(self.close)
         self.main_button = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_main')
         self.main_button.clicked.connect(self.abrir_main_window)
 
@@ -159,7 +164,14 @@ class EleicaoUi(QtWidgets.QMainWindow):
         pass
 
     def categorias(self):
-        pass
+        categorias_string = self.__eleicoes_controller.categorias_string(self.id_selected)
+        self.categorias_window = CategoriaUi(self, categorias_string)
+
+    def enviar_categorias(self, dados):
+        categorias = []
+        for dado in dados:
+            categorias.append(dado.text())
+        self.__eleicoes_controller.categorias(int(self.id_selected), categorias)
 
     def questoes(self):
         self.questoes_window = QuestaoUi(self.__controller, self.__eleicoes_controller.questoes(self.id_selected))
@@ -180,6 +192,10 @@ class EleicaoUi(QtWidgets.QMainWindow):
     def mostrar_erro(self, erro):
         self.erro_dialog = ErroUi(erro)
 
+    def abrir_main_window(self):
+        self.close()
+        self.__main_window.show()
+
     def botoes(self):
         if self.id_selected:
             self.atualizar_button.setEnabled(True)
@@ -188,6 +204,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.publicar_button.setEnabled(True)
             self.questoes_button.setEnabled(True)
             self.mesarios_button.setEnabled(True)
+            self.categorias_button.setEnabled(True)
         else:
             self.atualizar_button.setEnabled(False)
             self.cadastrar_button.setEnabled(True)
@@ -195,6 +212,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.publicar_button.setEnabled(False)
             self.questoes_button.setEnabled(False)
             self.mesarios_button.setEnabled(False)
+            self.categorias_button.setEnabled(False)
 
     def abrir_main_window(self):
         self.close()
