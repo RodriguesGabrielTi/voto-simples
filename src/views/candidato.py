@@ -83,7 +83,7 @@ class CandidatoUi(QtWidgets.QMainWindow):
     def cadastrar(self):
         try:
             if not self.file_path:
-                raise ValueError("Selecione uma imagem válida")
+                raise ValueError("Imagem nao inserida")
             dados = self.validate_fields()
             dados["imagem"] = QPixmap(self.file_path).toImage()
             self.__candidatos_controller.criar(dados)
@@ -96,7 +96,7 @@ class CandidatoUi(QtWidgets.QMainWindow):
     def atualizar(self):
         try:
             if not self.file_path:
-                raise ValueError("Selecione uma imagem válida")
+                raise ValueError("Imagem nao inserida")
             dados = self.validate_fields()
             dados["imagem"] = QPixmap(self.file_path).toImage()
             self.__candidatos_controller.atualizar(int(self.id_selected), dados)
@@ -153,15 +153,20 @@ class CandidatoUi(QtWidgets.QMainWindow):
 
     def dropEvent(self, event):
         if event.mimeData().hasImage:
-            print("AQUI3")
             event.setDropAction(QtCore.Qt.CopyAction)
             file_path = event.mimeData().urls()[0].toLocalFile()
-            print(file_path)
             self.set_image(file_path)
             event.accept()
         else:
             event.ignore()
 
     def set_image(self, file_path):
-        self.file_path = file_path
-        self.imagem_field.setPixmap(QPixmap(file_path))
+        arquivos_validos_3 = ["png", "jpg"]
+        arquivos_validos_4 = ["jpeg"]
+        try:
+            if file_path[-3:] not in arquivos_validos_3 and file_path[-4:] not in arquivos_validos_4:
+                raise ValueError("Formato de arquivo inválido")
+            self.file_path = file_path
+            self.imagem_field.setPixmap(QPixmap(file_path))
+        except ValueError as e:
+            self.mostrar_erro(str(e))

@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
+from sqlalchemy.exc import IntegrityError
 
 from settings import UI_PATH
 from views.eleicao import EleicaoUi
@@ -98,6 +99,9 @@ class MesarioUi(QtWidgets.QMainWindow):
             self.__mesario_controller.criar(dados)
             self.listar_mesario()
             self.clean()
+        except IntegrityError:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro("CPF ja cadastrado")
         except Exception as e:
             self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))
@@ -108,6 +112,9 @@ class MesarioUi(QtWidgets.QMainWindow):
             self.__mesario_controller.atualizar(self.cpf_selected, dados)
             self.carregar_fields()
             self.listar_mesario()
+        except IntegrityError:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro("CPF ja cadastrado")
         except Exception as e:
             self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))

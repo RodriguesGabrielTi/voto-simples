@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
+from sqlalchemy.exc import IntegrityError
 
 from settings import UI_PATH
 from views.erro import ErroUi
@@ -93,6 +94,9 @@ class VotanteUi(QtWidgets.QMainWindow):
             self.__votante_controller.criar(dados)
             self.listar_votantes()
             self.clean()
+        except IntegrityError:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro("CPF ja cadastrado")
         except Exception as e:
             self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))
@@ -103,6 +107,9 @@ class VotanteUi(QtWidgets.QMainWindow):
             self.__votante_controller.atualizar(self.cpf_selected, dados)
             self.carregar_fields()
             self.listar_votantes()
+        except IntegrityError:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro("CPF ja cadastrado")
         except Exception as e:
             self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))
