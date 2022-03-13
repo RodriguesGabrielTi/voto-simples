@@ -373,7 +373,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_cadastrar">
+           <widget class="QPushButton" name="pushButton_selecionar">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>

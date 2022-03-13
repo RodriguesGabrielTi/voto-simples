@@ -4,6 +4,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.sql import func
 from models.base_model import BaseModel
 import re
+from datetime import date, timedelta
 
 
 class Usuario(BaseModel):
@@ -34,3 +35,9 @@ class Usuario(BaseModel):
         if len(endereco) < 3 or len(endereco) > 50:
             raise ValueError("Endereço inválido")
         return endereco
+
+    @validates('data_nascimento')
+    def validar_data_nascimento(self, key, data_nascimento):
+        if data_nascimento > date.today() - timedelta(days=18*365.24):
+            raise ValueError("Data de nascimento inválida")
+        return data_nascimento

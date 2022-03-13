@@ -1,4 +1,6 @@
 from PyQt5 import QtWidgets, uic
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QRegExpValidator
 
 from models.administrador import Administrador
 from models.mesario import Mesario
@@ -19,10 +21,18 @@ class LoginUi(QtWidgets.QDialog):
         self.button = self.findChild(QtWidgets.QPushButton, 'pushButton_entrar')
 
         self.cpf_input = self.findChild(QtWidgets.QLineEdit, 'lineEdit_cpf')
+        self.cpf_input.textChanged.connect(self.validate_cpf)
+        self.cpf_input.setMaxLength(11)
+
         self.senha_input = self.findChild(QtWidgets.QLineEdit, 'lineEdit_senha')
         self.button.clicked.connect(self.login)
 
         self.showMaximized()
+
+    def validate_cpf(self):
+        reg_ex = QRegExp("^[0-9]+$")
+        cpf_validator = QRegExpValidator(reg_ex, self.cpf_input)
+        self.cpf_input.setValidator(cpf_validator)
 
     def login(self):
         cpf = self.cpf_input.text()
