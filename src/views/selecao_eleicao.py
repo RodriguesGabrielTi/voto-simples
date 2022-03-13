@@ -1,10 +1,12 @@
 from PyQt5 import QtWidgets, uic
 from settings import UI_PATH
+from views.validar_votante import ValidarVotanteUi
 from views.erro import ErroUi
 
 
 class SelecaoEleicaoUi(QtWidgets.QMainWindow):
     def __init__(self, aplicacao_controller):
+        self.validar_window = None
         self.questoes_window = None
         self.erro_dialog = None
         self.publicar_dialog = None
@@ -15,7 +17,12 @@ class SelecaoEleicaoUi(QtWidgets.QMainWindow):
         uic.loadUi(f"{UI_PATH}/selecionar_eleicao.ui", self)
         self.table: QtWidgets.QTableWidget = self.findChild(QtWidgets.QTableWidget, 'table')
 
-        self.selecionar_button = self.findChild(QtWidgets.QPushButton, 'pushButton_cadastrar')
+        self.selecionar_button = self.findChild(QtWidgets.QPushButton, 'pushButton_selecionar')
+        self.selecionar_button.setEnabled(False)
+        self.selecionar_button.clicked.connect(self.selecionar)
+
+        self.menu_exit = self.findChild(QtWidgets.QPushButton, 'pushButton_menu_exit')
+        self.menu_exit.clicked.connect(self.close)
 
         self.table.clicked.connect(self.on_click)
         self.id_selected = None
@@ -49,9 +56,14 @@ class SelecaoEleicaoUi(QtWidgets.QMainWindow):
 
     def on_click(self):
         index = (self.table.selectionModel().currentIndex())
+        self.selecionar_button.setEnabled(True)
         self.id_selected = index.sibling(index.row(), 0).data()
 
     def mostrar_erro(self, erro):
         self.erro_dialog = ErroUi(erro)
 
+    def selecionar(self):
+        if self.validar_window is None:
+            self.close()
+            self.validar_window = ValidarVotanteUi(self.__controller, self.id_selected)
 

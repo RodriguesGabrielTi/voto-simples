@@ -71,7 +71,6 @@ class VotanteUi(QtWidgets.QMainWindow):
 
     def carregar_fields(self):
         votante = self.__votante_controller.detalhar(self.cpf_selected)
-        print(votante)
         self.nome_field.setText(votante["nome"])
         self.data_nascimento_field.setDate(votante["data_nascimento"])
         self.cpf_field.setText(votante["cpf"])
