@@ -13,6 +13,8 @@ class Questao(BaseModel):
     candidatos = relationship("Candidato", back_populates="questao", cascade="all, delete")
     eleicao_id = Column(Integer, ForeignKey('eleicoes.id'))
     eleicao = relationship("Eleicao", back_populates="questoes")
+    nulos = Column(Integer, default=0)
+    brancos = Column(Integer, default=0)
 
     @validates('nome')
     def validar_nome(self, key, nome):

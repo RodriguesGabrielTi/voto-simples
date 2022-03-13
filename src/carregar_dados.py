@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 from models.categoria import Categoria
 from models.administrador import Administrador
@@ -8,6 +9,7 @@ from models.voto import Voto
 from models.mesario import Mesario
 from models.eleicao_mesario import EleicaoMesario
 from models.votante import Votante
+from models.registro_de_votacao import RegistroDeVotacao
 from models.base_model import BaseModel
 from engine import engine
 
@@ -24,8 +26,8 @@ def carregar(sessao):
             sessao.add(estudante)
             sessao.add(professor)
             sessao.add(tae)
-
             sessao.commit()
+
     with sessao.begin():
         if len(sessao.query(Administrador).all()) == 0:
             admin = Administrador(
@@ -37,3 +39,56 @@ def carregar(sessao):
             )
             sessao.add(admin)
             sessao.commit()
+
+    with sessao.begin():
+        if len(sessao.query(Eleicao).all()) == 0:
+            eleicao = Eleicao(
+                nome="EleicaoTeste",
+                descricao="gerada automaticamente")
+            sessao.add(eleicao)
+
+            eleicao.categorias_validas = sessao.query(Categoria).all()
+
+            questao = Questao(nome="questao1", descricao="gerada automaticamente",
+                              numero_escolhas=2, eleicao_id=eleicao.id)
+            sessao.add(questao)
+            for i in range(1, 4):
+                candidato = Candidato(nome="Candidato" + str(i),
+                                      imagem="statics/default_candidato_img/default" + str(i) + ".jpg")
+                candidato.questao = questao
+                sessao.add(candidato)
+
+            questao2 = Questao(nome="questao2", descricao="gerada automaticamente",
+                              numero_escolhas=2, eleicao_id=eleicao.id)
+            sessao.add(questao2)
+            for i in range(1, 4):
+                candidato = Candidato(nome="Candidato" + str(i+3),
+                                      imagem="statics/default_candidato_img/default" + str(i) + ".jpg")
+                candidato.questao = questao2
+                sessao.add(candidato)
+
+            mesario = Mesario(nome="mesario", senha="1234", cpf="11111111111",
+                              data_nascimento=date(year=2002, month=10, day=1), endereco="endereco")
+            sessao.add(mesario)
+
+            eleicao_mesario = EleicaoMesario(mesario_id=1, eleicao_id=1)
+            sessao.add(eleicao_mesario)
+
+            eleicao.data_inicio = datetime.datetime.today()
+            eleicao.data_fim = datetime.datetime(year=2023, month=10, day=1)
+            eleicao.estado = "EM_VOTACAO"
+
+            sessao.commit()
+
+    with sessao.begin():
+        if len(sessao.query(Votante).all()) == 0:
+            votante = Votante(
+                nome="Votante",
+                cpf="22222222222",
+                data_nascimento=date(year=2001, month=10, day=1),
+                endereco="endereco",
+                categoria_id=1
+            )
+            sessao.add(votante)
+            sessao.commit()
+
