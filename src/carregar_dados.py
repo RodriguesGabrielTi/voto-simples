@@ -54,7 +54,7 @@ def carregar(sessao):
             sessao.add(questao)
             for i in range(1, 4):
                 candidato = Candidato(nome="Candidato" + str(i),
-                                      imagem="statics/default_candidato_img/default" + str((i % 2) + 1) + ".jpeg")
+                                      imagem="statics/default_candidato_img/default" + str(i) + ".jpg")
                 candidato.questao = questao
                 sessao.add(candidato)
 
@@ -63,7 +63,7 @@ def carregar(sessao):
             sessao.add(questao2)
             for i in range(1, 4):
                 candidato = Candidato(nome="Candidato" + str(i+3),
-                                      imagem="statics/default_candidato_img/default" + str((i % 2) + 1) + ".jpeg")
+                                      imagem="statics/default_candidato_img/default" + str(i) + ".jpg")
                 candidato.questao = questao2
                 sessao.add(candidato)
 
@@ -83,7 +83,7 @@ def carregar(sessao):
     with sessao.begin():
         if len(sessao.query(Votante).all()) == 0:
             votante = Votante(
-                nome="admin",
+                nome="Votante",
                 cpf="22222222222",
                 data_nascimento=date(year=2001, month=10, day=1),
                 endereco="endereco",

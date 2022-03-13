@@ -1,8 +1,11 @@
 from PyQt5 import QtWidgets, uic, QtCore
+
 from settings import UI_PATH
 from views.confirmar_voto import ConfirmarVotoUi
 from views.erro import ErroUi
 from PyQt5.QtGui import QPixmap
+
+from views.voto_computado import VotoComputadoUi
 
 
 class ImageLabel(QtWidgets.QLabel):
@@ -66,20 +69,39 @@ class Pagina(QtWidgets.QWidget):
     def selecionados(self):
         if len(self.table.selectedIndexes()) > self.questao.numero_escolhas:
             raise ValueError("Erro na questao: " + self.questao.nome + ". São apenas permitidas "
-                             + self.questao.numero_escolhas + " escolhas")
+                             + str(self.questao.numero_escolhas) + " escolhas")
 
         candidatos = []
         for index in self.table.selectedIndexes():
             candidatos.append(self.questao.candidatos[index.row()])
 
-        sobras = 0
+        sobras = None
         if len(self.table.selectedIndexes()) < self.questao.numero_escolhas:
-            sobras = self.questao.numero_escolhas - len(self.table.selectedIndexes())
+            box = QtWidgets.QMessageBox()
+            box.setWindowTitle("Votos Sobrando")
+            box.setText("Na questão: " + self.questao.nome
+                                                    + " foram selecionados apenas "
+                                                    + str(len(self.table.selectedIndexes())) + " de "
+                                                    + str(self.questao.numero_escolhas)
+                                                    + ". Deseja votar nulo ou branco?")
+
+            box.addButton("Branco", QtWidgets.QMessageBox.ButtonRole.YesRole)
+            box.addButton("Nulo", QtWidgets.QMessageBox.ButtonRole.YesRole)
+            box.addButton("Cancelar", QtWidgets.QMessageBox.ButtonRole.RejectRole)
+            resultado = box.exec_()
+            print("AQUI")
+            print(resultado)
+            print("AQUI")
+            if resultado <= 1:
+                sobras = {"tipo": box.clickedButton().text().lower(), "numero": self.questao.numero_escolhas - len(self.table.selectedIndexes())}
+            else:
+                raise ValueError("Termine a votação")
         return {"nome": self.questao.nome, "candidatos": candidatos, "sobras": sobras}
 
 
 class VotacaoUi(QtWidgets.QMainWindow):
     def __init__(self, aplicacao_controller, votacao_controller):
+        self.voto_computado_window = None
         self.confirmar_window = None
         self.erro_dialog = None
         self.__controller = aplicacao_controller
@@ -115,12 +137,17 @@ class VotacaoUi(QtWidgets.QMainWindow):
             escolhas = {}
             for pagina in self.paginas:
                 escolhas[pagina.questao.id] = pagina.selecionados()
+            print("AQui")
+            print(escolhas)
             self.confirmar_window = ConfirmarVotoUi(self, escolhas)
         except ValueError as e:
             self.mostrar_erro(str(e))
 
     def confirmar(self, escolhas):
-        print(escolhas)
+        self.__votacao_controller.votar(escolhas)
+        self.confirmar_window.close()
+        self.close()
+        self.voto_computado_window = VotoComputadoUi()
 
     def mostrar_erro(self, erro):
         self.erro_dialog = ErroUi(erro)

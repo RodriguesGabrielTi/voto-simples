@@ -1,4 +1,5 @@
 from controllers.votacao_controller import VotacaoController
+from models.registro_de_votacao import RegistroDeVotacao
 from models.votante import Votante
 from models.eleicao import Eleicao
 
@@ -15,6 +16,8 @@ class ValidarVotanteController:
             raise ValueError("Votante não cadastrado")
         if votante.categoria not in self.__eleicao.categorias_validas:
             raise ValueError("Votante não pode votar nesta eleiçao")
+        if self.__sessao.query(RegistroDeVotacao).filter_by(eleicao_id=self.__eleicao.id, votante_id=votante.id).first():
+            raise ValueError("Votante já votou nesta eleiçao")
 
         return True
 
