@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb77d4a4-164e-4f1f-8226-ef4365fcb726" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/views/relatorio.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/eleicoes_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/eleicao.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/eleicao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/mesario.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/mesario.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/ui/eleicoes.ui" beforeDir="false" afterPath="$PROJECT_DIR$/statics/ui/eleicoes.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +41,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/relatorio-eleicao" />
+                    <option name="lastUsedInstant" value="1647210123" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="feature/mesarios" />
                     <option name="lastUsedInstant" value="1644453949" />

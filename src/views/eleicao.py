@@ -3,6 +3,7 @@ from settings import UI_PATH
 from views.erro import ErroUi
 from views.publicar import PublicarUi
 from views.questao import QuestaoUi
+from views.relatorio import RelatorioUi
 from views.vincular_mesario import VincularMesarioUi
 from views.categoria import CategoriaUi
 
@@ -45,6 +46,10 @@ class EleicaoUi(QtWidgets.QMainWindow):
         self.relatorio_button = self.findChild(QtWidgets.QPushButton, 'pushButton_relatorio')
         self.relatorio_button.setEnabled(False)
         self.relatorio_button.clicked.connect(self.relatorio)
+
+        self.finalizar_button = self.findChild(QtWidgets.QPushButton, 'pushButton_finalizar')
+        self.finalizar_button.setEnabled(False)
+        self.finalizar_button.clicked.connect(self.finalizar)
 
         self.categorias_button = self.findChild(QtWidgets.QPushButton, 'pushButton_categorias')
         self.categorias_button.setEnabled(False)
@@ -137,6 +142,15 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))
 
+    def finalizar(self):
+        try:
+            self.__eleicoes_controller.finalizar(int(self.id_selected))
+            self.carregar_fields()
+            self.listar_eleicoes()
+        except Exception as e:
+            self.__controller.sessao.rollback()
+            self.mostrar_erro(str(e))
+
     def excluir(self):
         try:
             self.__eleicoes_controller.excluir(int(self.id_selected))
@@ -161,7 +175,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.mostrar_erro(str(e))
 
     def relatorio(self):
-        pass
+        self.relatorio_window = RelatorioUi(int(self.id_selected), self.__eleicoes_controller)
 
     def categorias(self):
         categorias_string = self.__eleicoes_controller.categorias_string(self.id_selected)
@@ -205,6 +219,9 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.questoes_button.setEnabled(True)
             self.mesarios_button.setEnabled(True)
             self.categorias_button.setEnabled(True)
+            self.finalizar_button.setEnabled(True)
+            if self.estado_field.text() == 'FINALIZADA':
+                self.relatorio_button.setEnabled(True)
         else:
             self.atualizar_button.setEnabled(False)
             self.cadastrar_button.setEnabled(True)
