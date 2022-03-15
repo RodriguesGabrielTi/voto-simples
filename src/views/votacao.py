@@ -89,9 +89,6 @@ class Pagina(QtWidgets.QWidget):
             box.addButton("Nulo", QtWidgets.QMessageBox.ButtonRole.YesRole)
             box.addButton("Cancelar", QtWidgets.QMessageBox.ButtonRole.RejectRole)
             resultado = box.exec_()
-            print("AQUI")
-            print(resultado)
-            print("AQUI")
             if resultado <= 1:
                 sobras = {"tipo": box.clickedButton().text().lower(), "numero": self.questao.numero_escolhas - len(self.table.selectedIndexes())}
             else:
@@ -137,8 +134,6 @@ class VotacaoUi(QtWidgets.QMainWindow):
             escolhas = {}
             for pagina in self.paginas:
                 escolhas[pagina.questao.id] = pagina.selecionados()
-            print("AQui")
-            print(escolhas)
             self.confirmar_window = ConfirmarVotoUi(self, escolhas)
         except ValueError as e:
             self.mostrar_erro(str(e))

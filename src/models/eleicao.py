@@ -43,5 +43,6 @@ class Eleicao(BaseModel):
     def validar_data_fim(self, key, data_fim):
         if data_fim < self.data_inicio:
             raise ValueError("Data de fim não pode ser menor que a data de início(agora)")
+        return data_fim
 
 

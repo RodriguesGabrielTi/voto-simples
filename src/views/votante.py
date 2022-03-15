@@ -12,7 +12,7 @@ class VotanteUi(QtWidgets.QMainWindow):
         self.erro_dialog = None
         self.main_window = None
         self.__controller = aplicacao_controller
-        self.__votante_controller = self.__controller.votantes_controller()
+        self.__votante_controller = self.__controller.votantes_controller
         self.__main_window = main_window
         super().__init__()
 
