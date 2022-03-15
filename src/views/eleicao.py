@@ -170,7 +170,7 @@ class EleicaoUi(QtWidgets.QMainWindow):
             self.__eleicoes_controller.publicar(int(self.id_selected), dados)
             self.carregar_fields()
             self.listar_eleicoes()
-        except Exception as e:
+        except (ValueError, AssertionError) as e:
             self.__controller.sessao.rollback()
             self.mostrar_erro(str(e))
 

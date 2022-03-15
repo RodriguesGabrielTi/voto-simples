@@ -74,7 +74,7 @@ def carregar(sessao):
             eleicao_mesario = EleicaoMesario(mesario_id=1, eleicao_id=1)
             sessao.add(eleicao_mesario)
 
-            eleicao.data_inicio = datetime.datetime.today()
+            eleicao.data_inicio = datetime.datetime.now()
             eleicao.data_fim = datetime.datetime(year=2023, month=10, day=1)
             eleicao.estado = "EM_VOTACAO"
 
@@ -89,6 +89,22 @@ def carregar(sessao):
                 endereco="endereco",
                 categoria_id=1
             )
+            votante2 = Votante(
+                nome="Votante2",
+                cpf="33333333333",
+                data_nascimento=date(year=2001, month=10, day=1),
+                endereco="endereco",
+                categoria_id=2
+            )
+            votante3 = Votante(
+                nome="Votante3",
+                cpf="44444444444",
+                data_nascimento=date(year=2001, month=10, day=1),
+                endereco="endereco",
+                categoria_id=3
+            )
             sessao.add(votante)
+            sessao.add(votante2)
+            sessao.add(votante3)
             sessao.commit()
 

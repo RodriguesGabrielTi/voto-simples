@@ -20,6 +20,7 @@ class EleicoesController:
         self.__eleicoes_ui = None
 
     def listar(self):
+        self.finalizar_em_andamento()
         eleicoes = self.__sessao.query(Eleicao).all()
         return eleicoes
 
@@ -69,6 +70,15 @@ class EleicoesController:
             raise ValueError("Eleicao já publicada")
         if eleicao.estado == 'FINALIZADA':
             raise ValueError("Eleicao já finalizada")
+
+        assert len(eleicao.categorias_validas) > 0, "Eleição deve possuir pelo menos uma categoria"
+        assert len(eleicao.questoes) > 0, "Eleição deve possuir pelo menso uma questão"
+        for questao in eleicao.questoes:
+            assert len(questao.candidatos) >= questao.numero_escolhas, "A questão deve possuir pelo menos " \
+                                                                  + str(questao.numero_escolhas) + " candidatos"
+
+        assert self.__sessao.query(EleicaoMesario).filter_by(eleicao_id=eleicao.id).first() , \
+            "A eleição não possui mesários cadastrados"
 
         eleicao.data_inicio = parametros["data_inicio"]
         eleicao.data_fim = parametros["data_fim"]
@@ -147,6 +157,7 @@ class EleicoesController:
             raise ValueError("Só é possível alterar eleição em criação")
 
     def listar_mesario_eleicoes(self, mesario: Mesario):
+        self.finalizar_em_andamento()
         eleicoes = self.__sessao.query(
             Eleicao
         ).join(
@@ -157,3 +168,9 @@ class EleicoesController:
             Eleicao.estado == "EM_VOTACAO"
         ).all()
         return eleicoes
+
+    def finalizar_em_andamento(self):
+        for eleicao in self.__sessao.query(Eleicao).filter_by(estado="EM_VOTACAO").all():
+            if eleicao.data_fim < datetime.datetime.now():
+                eleicao.estado = "FINALIZADA"
+        self.__sessao.commit()
